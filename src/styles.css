@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  font-family: Poppins, sans-serif;
+  background-image : url("/background_hospital.png");
+  background-size: cover; /* Ensures the image covers the whole area */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center; /* Centers the background image */
+  margin: 0;
+}
+
+html, body { height: 100%; }
