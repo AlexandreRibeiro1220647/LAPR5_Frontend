@@ -1,0 +1,49 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 615px;
+  position: relative; /* Allow positioning of the buttons within the container */
+}
+
+
+/* Position the first button with absolute positioning */
+.home-container .login_button {
+  padding: 23px 37px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px; /* Make sure the corners are rounded */
+  position: absolute;
+  top: 444px;
+  left: 177px;
+  background-color: rgb(49, 81, 102); /* Default background color */
+  color: white;
+  border: 2px solid rgb(49, 81, 102);
+}
+
+/* Hover effect for button1 */
+.home-container .login_button:hover {
+  background-color: rgb(164, 193, 216, 0.6);
+  color: rgb(49, 81, 102);
+}
+
+/* Position the second button */
+.home-container .sign_up_button {
+  padding: 23px 37px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px; /* Make sure the corners are rounded */
+  position: absolute;
+  top: 444px;
+  left: 404px;
+  background-color: transparent;
+  color: rgb(49, 81, 102);
+  border: 2px solid rgb(49, 81, 102);
+}
+
+.home-container .sign_up_button:hover {
+  background-color: rgb(164, 193, 216, 0.6);
+  color: white;
+}
