@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { OperationTypesService } from '../../services/operation-types/operation-types.service';
 import {
   MatCell, MatCellDef,
@@ -17,6 +17,10 @@ import {OperationTypesDialogComponent} from '../dialog/operation-types/operation
 import {MatDialog} from '@angular/material/dialog';
 import {CreateOperationTypeDTO} from '../../models/operation-types/createOperationTypeDTO';
 import {OperationType} from '../../models/operation-types/operationType';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {SelectionModel} from '@angular/cdk/collections';
+import {OperationTypesDialogEditComponent} from '../dialog/operation-types/edit/operation-types-dialog-edit.component';
+import {UpdateOperationTypeDTO} from '../../models/operation-types/updateOperationTypeDTO';
 
 @Component({
   selector: 'app-admin',
@@ -39,13 +43,15 @@ import {OperationType} from '../../models/operation-types/operationType';
     MatButton,
     MatPaginator,
     MatInput,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCheckbox
   ],
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'requiredStaffBySpecialization', 'estimatedDuration', 'isActive'];
+export class AdminComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['id', 'name', 'requiredStaffBySpecialization', 'estimatedDuration', 'isActive'];
   dataSource: MatTableDataSource<OperationType>;
+  selection = new SelectionModel<OperationType>(false, []); // Single selection
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -83,8 +89,7 @@ export class AdminComponent implements OnInit {
     );
   }
 
-
-  openDialog(): void {
+  openCreateDialog(): void {
     const dialogRef = this.dialog.open(OperationTypesDialogComponent, {
       width: '400px',
     });
@@ -95,16 +100,85 @@ export class AdminComponent implements OnInit {
         this.operationTypesService.createItem(result).subscribe({
           next: (response) => {
             console.log('Operation created successfully:', response);
-            // Handle successful response, e.g., add to table, clear form, etc.
           },
           error: (error) => {
             console.error('Error creating operation:', error);
-            // Handle error, show message to user, etc.
           }
         });
         console.log('Operation Type Data:', result);
-        // Here you can push result to your data source to update the table
       }
     });
   }
+
+  openEditDialog(): void {
+    const dialogRef = this.dialog.open(OperationTypesDialogEditComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: UpdateOperationTypeDTO | undefined) => {
+      if (result) {
+        const selectedRows = this.selection.selected;
+
+        if (selectedRows.length === 0) {
+          console.log('No row selected');
+          return;
+        }
+        selectedRows.forEach(row => {
+          console.log(row);
+          const cleanedData = this.cleanPayload(result, row);  // Clean the data
+          console.log(cleanedData);
+
+          this.operationTypesService.updateItem(row.operationTypeId, cleanedData).subscribe({
+            next: (response) => {
+              console.log('Operation created successfully:', response);
+            },
+            error: (error) => {
+              console.error('Error creating operation:', error);
+            }
+          });
+        });
+        console.log('Operation Type Data:', result);
+      }
+    });
+  }
+
+  // Function to remove properties that are either empty or unchanged
+  cleanPayload(data: any, originalData: any): any {
+    const cleanedData = { ...data };
+
+    // Loop over all properties in the data
+    Object.keys(cleanedData).forEach(key => {
+      // If the value is an empty string or if it hasn't changed, remove it
+      if (
+        (typeof cleanedData[key] === 'string' && cleanedData[key] === "") ||  // Check if it's an empty string
+        (Array.isArray(cleanedData[key]) && cleanedData[key].length === 0) ||  // Check if it's an empty array
+        (Array.isArray(cleanedData[key]) && cleanedData[key].every(item => item === "")) ||  // Check if array contains only empty strings
+
+        cleanedData === originalData  // If the value hasn't changed, remove it
+      ) {
+        delete cleanedData[key];
+      }
+    });
+
+    return cleanedData;
+  }
+
+  // Backend call with selected row data
+  inactivateOperationRequest() {
+    const selectedData = this.selection.selected[0]; // Get the selected row
+    if (selectedData) {
+      this.operationTypesService.deleteItem(this.selection.selected[0].operationTypeId).subscribe({
+        next: (response) => console.log('PUT request successful', response),
+        error: (error) => console.error('Error with PUT request', error),
+      });
+    } else {
+      alert('Please select a row to perform the action.');
+    }
+  }
+
+  // Toggle selection for a single row when clicked
+  toggleSelection(row: OperationType) {
+    this.selection.toggle(row);
+  }
+
 }

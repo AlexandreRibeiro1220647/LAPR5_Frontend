@@ -37,10 +37,19 @@ th.mat-header-cell, td.mat-cell {
 }
 
 td, th {
-  width: 25%;
+  width: 20%;
 }
 
-.button-container .create-button {
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Align items to the left */
+}
+
+.button-container .create-button,
+.button-container .edit-button,
+.button-container .delete-button
+{
+  margin: 20px auto;
   padding: 23px 37px;
   font-size: 16px;
   cursor: pointer;
@@ -52,7 +61,14 @@ td, th {
 }
 
 /* Hover effect for button1 */
-.button-container .create-button:hover {
+.button-container .create-button:hover,
+.button-container .edit-button:hover,
+.button-container .delete-button:hover
+{
   background-color: rgb(164, 193, 216, 0.6);
-  color: rgb(49, 81, 102);
+  color: white;
+}
+
+.selected {
+  background-color: rgba(164, 193, 216, 0.1); /* Light blue highlight */
 }
