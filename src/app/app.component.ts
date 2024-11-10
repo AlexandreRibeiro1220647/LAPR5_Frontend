@@ -1,42 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, Routes} from '@angular/router';  // Import Router
-import { ApiService } from './services/api-service.service';
-import {LoginComponent} from './components/login/login.component';
-import { RouterModule } from '@angular/router'; // Import RouterModule
+import {RouterOutlet} from '@angular/router';
+import {AuthInterceptor} from './interceptor/AuthInterceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  templateUrl: './app.component.html',
   imports: [
-    RouterModule
+    RouterOutlet,
   ],
-  styleUrls: ['./app.component.css']  // corrected styleUrl to styleUrls for plural usage
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = 'LAPR5_Frontend';
   data: any;
-  // Define routes in a standalone component
-  routes: Routes = [
-    { path: 'login', component: LoginComponent },
-  ];
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    //this.getData();
-    this.router.config = this.routes;
-  }
+  ngOnInit(): void {}
 
-  getData(): void {
-    this.apiService.getData().subscribe(response => {
-      this.data = response;
-      console.log(response);
-    });
-  }
-
-  // Navigate to the login component
-  navigateToLogin(): void {
-    this.router.navigate(['/login']);  // Redirect to '/login' route
-  }
 }

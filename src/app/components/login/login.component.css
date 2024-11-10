@@ -3,11 +3,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 574px;
+  position: relative; /* Allow positioning of the buttons within the container */
 }
 
-button {
-  padding: 10px 20px;
+.login-container .login_button {
+  padding: 23px 37px;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px; /* Make sure the corners are rounded */
+  position: absolute;
+  top: 444px;
+  left: 177px;
+  background-color: rgb(49, 81, 102); /* Default background color */
+  color: white;
+  border: 2px solid rgb(49, 81, 102);
 }

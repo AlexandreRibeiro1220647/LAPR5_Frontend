@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -6,11 +6,20 @@ import { provideClientHydration } from '@angular/platform-browser';
 
 import {provideHttpClient, withFetch} from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
+import {LoginService} from './services/login/login.service';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes), provideClientHydration(),
-    provideHttpClient(withFetch()), { provide: 'API_URL', useValue: environment.apiUrl } // Providing the API URL
+    provideHttpClient(withFetch()), { provide: 'API_URL', useValue: environment.apiUrl },
+    { provide: 'API_URL', useValue: environment.apiUrl },
+    provideAnimationsAsync(), // Providing the API URL
+    importProvidersFrom(LoginService),
+    { provide: JWT_OPTIONS, useValue: {} }, // Provide JWT_OPTIONS with an empty config
+    { provide: JwtHelperService, useClass: JwtHelperService }, // Provide JwtHelperService as a class
   ]
 };
