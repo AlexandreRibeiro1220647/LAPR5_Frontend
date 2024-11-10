@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CreateOperationTypeDTO} from '../../models/operation-types/createOperationTypeDTO';
 import {OperationType} from '../../models/operation-types/operationType';
+import {UpdateOperationTypeDTO} from '../../models/operation-types/updateOperationTypeDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,11 @@ export class OperationTypesService {
     return this.http.post<CreateOperationTypeDTO>(`${this.apiUrl}/OperationType`, operationType);
   }
 
-  updateItem(id: number, item: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/OperationType/${id}`, item);
+  updateItem(id: string, operationType: any): Observable<UpdateOperationTypeDTO> {
+    return this.http.put<any>(`${this.apiUrl}/OperationType/update/${id}`, operationType);
   }
 
-  deleteItem(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/OperationType/${id}`);
+  deleteItem(id: string): Observable<OperationType> {
+    return this.http.put<OperationType>(`${this.apiUrl}/OperationType/delete/${id}`, null);
   }
 }
