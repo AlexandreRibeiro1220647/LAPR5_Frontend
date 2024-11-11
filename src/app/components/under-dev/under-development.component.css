@@ -1,0 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgb(49, 81, 102);
+  color: rgb(49, 81, 102);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Overlay styling for the under-development message */
+.overlay {
+  height: 77.35vh;
+}
+
+.message-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Light overlay for a soft look */
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  max-width: 90%;
+  width: 500px;
+}
+
+.message-container h1 {
+  font-size: 2em;
+  color: rgb(49, 81, 102);
+  margin-bottom: 15px;
+}
+
+.message-container p {
+  font-size: 1.2em;
+  color: rgb(164, 193, 216);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .message-container h1 {
+    font-size: 1.6em;
+  }
+
+  .message-container p {
+    font-size: 1em;
+  }
+}
+
+/* Background styling for a blurred effect */
+main {
+  background: linear-gradient(135deg, rgb(164, 193, 216), rgb(49, 81, 102));
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  filter: blur(10px);
+  overflow: hidden;
+}
