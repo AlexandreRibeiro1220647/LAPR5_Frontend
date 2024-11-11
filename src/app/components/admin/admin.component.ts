@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
 import { OperationTypesService } from '../../services/operation-types/operation-types.service';
 import {
   MatCell, MatCellDef,
@@ -9,7 +9,7 @@ import {
   MatTableDataSource
 } from '@angular/material/table';
 import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, MatSortHeader, Sort} from '@angular/material/sort';
 import {MatButton} from '@angular/material/button';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatInput} from '@angular/material/input';
@@ -21,6 +21,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
 import {OperationTypesDialogEditComponent} from '../dialog/operation-types/edit/operation-types-dialog-edit.component';
 import {UpdateOperationTypeDTO} from '../../models/operation-types/updateOperationTypeDTO';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-admin',
@@ -44,11 +45,14 @@ import {UpdateOperationTypeDTO} from '../../models/operation-types/updateOperati
     MatPaginator,
     MatInput,
     MatFormFieldModule,
-    MatCheckbox
+    MatCheckbox,
+    MatSortHeader
   ],
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, AfterViewInit {
+  private _liveAnnouncer = inject(LiveAnnouncer);
+
   displayedColumns: string[] = ['id', 'name', 'requiredStaffBySpecialization', 'estimatedDuration', 'isActive'];
   dataSource: MatTableDataSource<OperationType>;
   selection = new SelectionModel<OperationType>(false, []); // Single selection
@@ -179,6 +183,19 @@ export class AdminComponent implements OnInit, AfterViewInit {
   // Toggle selection for a single row when clicked
   toggleSelection(row: OperationType) {
     this.selection.toggle(row);
+  }
+
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
 }

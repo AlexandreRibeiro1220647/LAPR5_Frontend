@@ -4,7 +4,7 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. 'Knee'" #input>
   </mat-form-field>
 
-  <table mat-table [dataSource]="dataSource" matSort class="mat-table">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">
 
     <!-- ID Column -->
     <ng-container matColumnDef="id">
@@ -14,25 +14,25 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Name"> Name </th>
       <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
     </ng-container>
 
     <!-- Required Staff by Specialization Column -->
     <ng-container matColumnDef="requiredStaffBySpecialization">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Required Staff </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Required Staff"> Required Staff </th>
       <td mat-cell *matCellDef="let element"> {{ element.requiredStaffBySpecialization.join(', ') }} </td>
     </ng-container>
 
     <!-- Estimated Duration Column -->
     <ng-container matColumnDef="estimatedDuration">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estimated Duration </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Estimated Duration"> Estimated Duration </th>
       <td mat-cell *matCellDef="let element"> {{ element.estimatedDuration }} </td>
     </ng-container>
 
     <!-- Is Active Column -->
     <ng-container matColumnDef="isActive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Active </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Status"> Is Active </th>
       <td mat-cell *matCellDef="let element"> {{ element.isActive ? 'Yes' : 'No' }} </td>
     </ng-container>
 
