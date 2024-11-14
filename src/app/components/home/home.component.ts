@@ -5,6 +5,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {LoginService} from '../../services/login/login.service';
 import {JWT_OPTIONS} from '@auth0/angular-jwt';
 
+interface Token {
+  accessToken: string;
+}
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -30,21 +33,34 @@ export class HomeComponent {
 
   login() {
     this.loginService.authenticate().subscribe(response => {
-      // Assuming the role is stored in the token or session
-      const token = document.cookie.split('; ').find(row => row.startsWith('AuthToken='));
+      console.log(response);
 
-      if (token) {
-        // Check the role from the token (or API call to fetch the role)
-        const role = this.loginService.getUserRoles(token.split('=')[1]); // Extract the role from decoded token
+      const sessionId = response.sessionId;
+      this.loginService.pollAuthStatus(sessionId).subscribe({
+        next: () => {
+          this.loginService.getToken(sessionId).subscribe({
+            next: (token: Token) => {
+              // Now you can use the token, e.g., store it, or send it in headers for authenticated requests
+              if (token) {
+                // Check the role from the token (or API call to fetch the role)
+                const role = this.loginService.getRolesFromToken(token.accessToken); // Extract the role from decoded token
+                if (role) {
+                  if (role[0] === 'Admin') {
+                    this.router.navigate(['admin']);
+                  } else if (role[0] === 'Patient') {
+                    this.router.navigate(['patient']);
+                  } else {
+                    this.router.navigate(['ll']);
+                  }
+                }
+              }
 
-        if (role[0] === 'doctor') {
-          this.router.navigate(['/doctor-dashboard']);
-        } else if (role[0] === 'patient') {
-          this.router.navigate(['/patient-dashboard']);
-        } else {
-          this.router.navigate(['/default-dashboard']);
-        }
-      }
+            },
+            error: (err) => console.error("Polling or token retrieval error:", err),
+          });
+        },
+        error: (err) => console.error("Polling error:", err),
+      });
     }, error => {
       console.error('Login failed', error);
     });
