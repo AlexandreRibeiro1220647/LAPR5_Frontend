@@ -4,11 +4,21 @@ import {PatientComponent} from './components/patient/patient.component';
 import {StaffComponent} from './components/staff/staff.component';
 import {AdminComponent} from './components/admin/admin.component';
 import {UnderDevelopmentComponent} from './components/under-dev/under-development.component';
+import {OperationTypeComponent} from './components/admin/operation-type/operation-type.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
   { path: 'staff', component: StaffComponent },
   { path: 'patient', component: PatientComponent },
-  { path: 'admin', component: AdminComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      { path: 'operation-type', component: OperationTypeComponent },
+      { path: 'component2', component: OperationTypeComponent }, // alterem para o vosso
+      { path: 'component3', component: OperationTypeComponent }, // alterem para o vosso
+      { path: '', redirectTo: 'operation-type', pathMatch: 'full' }, // Default child route
+    ],
+  },
   { path: '', component: HomeComponent },
 ];
