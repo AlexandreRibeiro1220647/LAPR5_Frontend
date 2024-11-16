@@ -42,6 +42,7 @@ export class HomeComponent {
             next: (token: Token) => {
               // Now you can use the token, e.g., store it, or send it in headers for authenticated requests
               if (token) {
+                console.log(token);
                 // Check the role from the token (or API call to fetch the role)
                 const role = this.loginService.getRolesFromToken(token.accessToken); // Extract the role from decoded token
                 if (role) {
@@ -49,8 +50,10 @@ export class HomeComponent {
                     this.router.navigate(['admin']);
                   } else if (role[0] === 'Patient') {
                     this.router.navigate(['patient']);
+                  } else if (role[0] === 'Doctor') {
+                    this.router.navigate(['staff']);
                   } else {
-                    this.router.navigate(['ll']);
+                    this.router.navigate(['']);
                   }
                 }
               }

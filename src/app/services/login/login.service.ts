@@ -30,13 +30,20 @@ export class LoginService {
       }
 
       const payload = parts[1];
-      const decodedPayload = atob(payload); // Decode Base64
-      return JSON.parse(decodedPayload); // Parse JSON
+
+      // Fix Base64 URL-safe encoding
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const paddedBase64 = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, '='); // Ensure padding
+
+      // Decode Base64 and parse JSON
+      const decodedPayload = atob(paddedBase64);
+      return JSON.parse(decodedPayload);
     } catch (error) {
       console.error("Token decoding failed:", error);
       return null;
     }
   }
+
 
   // Extract roles from the decoded token
   getRolesFromToken(token: string): string[] | null {
