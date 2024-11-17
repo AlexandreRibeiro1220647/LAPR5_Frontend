@@ -13,7 +13,7 @@ import {MatSort, MatSortHeader, Sort} from '@angular/material/sort';
 import {MatButton} from '@angular/material/button';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatInput} from '@angular/material/input';
-import {OperationTypesDialogComponent} from '../../dialog/operation-types/operation-types-dialog.component';
+import {OperationTypesDialogComponent} from '../../dialog/operation-types/create/operation-types-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateOperationTypeDTO} from '../../../models/operation-types/createOperationTypeDTO';
 import {OperationType} from '../../../models/operation-types/operationType';

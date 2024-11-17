@@ -4,7 +4,8 @@ import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '
 import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button'
-import {CreateOperationTypeDTO} from '../../../models/operation-types/createOperationTypeDTO';
+import {CreateOperationTypeDTO} from '../../../../models/operation-types/createOperationTypeDTO';
+import {SearchOperationTypeDTO} from '../../../../models/operation-types/searchOperationTypeDTO';
 
 @Component({
   selector: 'app-operation-types-dialog',
