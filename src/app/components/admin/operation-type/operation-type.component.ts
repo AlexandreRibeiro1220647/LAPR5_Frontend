@@ -22,6 +22,10 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {OperationTypesDialogEditComponent} from '../../dialog/operation-types/edit/operation-types-dialog-edit.component';
 import {UpdateOperationTypeDTO} from '../../../models/operation-types/updateOperationTypeDTO';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {
+  OperationTypesSearchDialogComponent
+} from '../../dialog/operation-types/search/operation-types-search-dialog.component';
+import {SearchOperationTypeDTO} from '../../../models/operation-types/searchOperationTypeDTO';
 
 @Component({
   selector: 'app-admin',
@@ -189,4 +193,24 @@ export class OperationTypeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(OperationTypesSearchDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: SearchOperationTypeDTO | undefined) => {
+      if (result) {
+        // Handle the result data here, e.g., add it to your data array
+        this.operationTypesService.searchItems(result).subscribe({
+          next: (response) => {
+            this.dataSource.data = response;
+          },
+          error: (error) => {
+            console.error('Error filtering operation type data:', error);
+          }
+        });
+        console.log('Operation Type Data:', result);
+      }
+    });
+  }
 }

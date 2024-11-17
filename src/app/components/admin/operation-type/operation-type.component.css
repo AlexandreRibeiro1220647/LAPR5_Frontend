@@ -26,7 +26,8 @@ td, th {
 
 .button-container .create-button,
 .button-container .edit-button,
-.button-container .delete-button
+.button-container .delete-button,
+.button-container .search-button
 {
   margin: 20px auto;
   padding: 23px 37px;
@@ -42,7 +43,8 @@ td, th {
 /* Hover effect for button1 */
 .button-container .create-button:hover,
 .button-container .edit-button:hover,
-.button-container .delete-button:hover
+.button-container .delete-button:hover,
+.button-container .search-button:hover
 {
   background-color: rgb(164, 193, 216, 0.6);
   color: white;
