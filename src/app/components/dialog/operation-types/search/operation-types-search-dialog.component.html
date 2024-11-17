@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Search Operation Type</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="operationForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Operation Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter operation name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Required Staff</mat-label>
+      <input matInput formControlName="requiredStaffBySpecialization" placeholder="Enter required staff" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Estimated Duration</mat-label>
+      <input matInput formControlName="estimatedDuration" placeholder="Enter estimated duration" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Status</mat-label>
+      <input matInput formControlName="status" placeholder="Enter Status" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Search</button>
+</mat-dialog-actions>
