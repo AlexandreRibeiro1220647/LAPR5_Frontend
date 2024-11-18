@@ -47,8 +47,6 @@ export class LoginService {
 
   // Extract roles from the decoded token
   getRolesFromToken(token: string): string[] | null {
-    console.log("Token retrieved:", token);
-
     const decodedToken = this.decodeToken(token.toString());
     if (decodedToken) {
       // Access the roles in your custom claim
@@ -78,4 +76,7 @@ export class LoginService {
     return this.http.get<Token>(`http://localhost:5012/api/User/get-token/${sessionId}`);
   }
 
+  signup(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Patients/signup`, {});
+  }
 }
