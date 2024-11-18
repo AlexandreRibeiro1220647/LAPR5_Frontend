@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Search Operation Type</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="operationForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Patient Name</mat-label>
+      <input matInput formControlName="patientName" placeholder="Enter patient name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Patient Id</mat-label>
+      <input matInput formControlName="patientId" placeholder="Enter pacientId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Operation Type</mat-label>
+      <input matInput formControlName="operationTypeId" placeholder="Enter operationTypeId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Priority</mat-label>
+      <input matInput formControlName="priority" placeholder="Enter priority" />
+    </mat-form-field>
+        
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option value="Elective">Elective</mat-option>
+          <mat-option value="Urgent">Urgent</mat-option>
+        <mat-option value="Emergency">Emergency</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+     <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Deadline</mat-label>
+            <input matInput formControlName="deadline" placeholder="Enter deadline" />
+          </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Search</button>
+</mat-dialog-actions>

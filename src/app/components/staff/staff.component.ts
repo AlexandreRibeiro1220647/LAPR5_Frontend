@@ -25,6 +25,13 @@ import { OperationRequestDialogCreate } from '../dialog/operation-requests/creat
 import { OperationRequestDialogEdit } from '../dialog/operation-requests/edit/operation-request-dialog-edit';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import {
+  OperationRequestSearchDialogComponent
+} from '../dialog/operation-requests/search/operation-request-dialog-search';
+import {SearchOperationRequestDTO} from '../../models/operation-requests/searchOperationRequestsDTO';
+import { OperationTypesService } from '../../services/operation-types/operation-types.service';
+import { OperationType } from '../../models/operation-types/operationType';
+
 
 
 
@@ -59,19 +66,23 @@ import { CommonModule } from '@angular/common';
 export class StaffComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
 
-  displayedColumns: string[] = ['operationRequestId', 'pacientId', 'doctorId', 'operationTypeId', 'priority', 'deadline'];
+  displayedColumns: string[] = [ 'pacientId', 'doctorId', 'operationTypeId', 'priority', 'deadline'];
   dataSource: MatTableDataSource<OperationRequest>;
   selection = new SelectionModel<OperationRequest>(false, []); // Single selection
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private operationRequestService: OperationRequestService, public dialog: MatDialog) {
+  constructor(private operationRequestService: OperationRequestService, public dialog: MatDialog, private operationTypesService: OperationTypesService) {
     this.dataSource = new MatTableDataSource<OperationRequest>([]);
   }
 
+  operationTypes: OperationType[] = [];
+
   ngOnInit() {
     this.loadOperationRequests();
+    this.loadOperationTypes();
+    
   }
 
   ngAfterViewInit() {
@@ -79,14 +90,6 @@ export class StaffComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
   loadOperationRequests() {
     this.operationRequestService.getItems().subscribe(
@@ -98,6 +101,24 @@ export class StaffComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  loadOperationTypes() {
+    this.operationRequestService.getOperationTypes().subscribe(
+      (data: OperationType[]) => {
+        this.operationTypes = data;
+      },
+      (error) => {
+        console.error('Error fetching operation types', error);
+      }
+    );
+  }
+
+
+  getOperationTypeName(operationTypeId: string): string {
+    const operationType = this.operationTypes.find(type => type.operationTypeId === operationTypeId);
+    return operationType ? operationType.name : 'Unknown';
+  }
+
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(OperationRequestDialogCreate, {
@@ -202,6 +223,27 @@ export class StaffComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(OperationRequestSearchDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: SearchOperationRequestDTO | undefined) => {
+      if (result) {
+        // Handle the result data here, e.g., add it to your data array
+        this.operationRequestService.searchItems(result).subscribe({
+          next: (response) => {
+            this.dataSource.data = response;
+          },
+          error: (error) => {
+            console.error('Error filtering operation request data:', error);
+          }
+        });
+        console.log('Operation Request Data:', result);
+      }
+    });
   }
 
 }
