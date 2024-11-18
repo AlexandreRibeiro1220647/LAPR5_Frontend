@@ -57,7 +57,7 @@ import {SearchOperationTypeDTO} from '../../../models/operation-types/searchOper
 export class OperationTypeComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
 
-  displayedColumns: string[] = ['id', 'name', 'requiredStaffBySpecialization', 'estimatedDuration', 'isActive'];
+  displayedColumns: string[] = ['name', 'requiredStaffBySpecialization', 'estimatedDuration', 'isActive'];
   dataSource: MatTableDataSource<OperationType>;
   selection = new SelectionModel<OperationType>(false, []); // Single selection
 
