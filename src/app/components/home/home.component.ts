@@ -5,9 +5,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {LoginService} from '../../services/login/login.service';
 import {JWT_OPTIONS} from '@auth0/angular-jwt';
 import {PatientsService} from '../../services/patients/patients.service';
-import {OperationTypesDialogComponent} from '../dialog/operation-types/create/operation-types-dialog.component';
-import {CreateOperationTypeDTO} from '../../models/operation-types/createOperationTypeDTO';
-import {response} from 'express';
 import {MatDialog} from '@angular/material/dialog';
 import {CreatePatientDTO} from '../../models/patients/createPatientDTO';
 import {SignUpDialogComponent} from '../dialog/login/sign-up-dialog/sign-up-dialog.component';
@@ -101,12 +98,13 @@ export class HomeComponent {
                         console.log(token);
                         // Check the role from the token (or API call to fetch the role)
                         const role = this.loginService.getRolesFromToken(token.accessToken); // Extract the role from decoded token
+                        console.log("role", role);
                         if (role) {
                           if (role[0] === 'Patient') {
                             this.router.navigate(['patient']);
                           } else {
                             this.router.navigate(['']);
-                            console.log("Error - Logged user doesnt have patient role")
+                            console.error("Logged user doesnt have patient role")
                           }
                         }
 
@@ -127,25 +125,5 @@ export class HomeComponent {
         });
       }
     });
-  }
-
-  test() {
-    const dialogRef = this.dialog.open(SignUpDialogComponent, {
-      width: '400px',
-    });
-    dialogRef.afterClosed().subscribe((result: CreatePatientDTO | undefined) => {
-      if (result) {
-
-        this.patientsService.createItem(result).subscribe({
-          next: (response) => {
-            console.log('Patient created successfully:', response);
-          },
-          error: (error) => {
-            console.error('Error creating patient:', error);
-          }
-        });
-      }
-    });
-
   }
 }
