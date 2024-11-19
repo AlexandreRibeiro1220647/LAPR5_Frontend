@@ -92,7 +92,6 @@ export class OperationTypeComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(OperationTypesDialogComponent, {
       width: '400px',
     });
-
     dialogRef.afterClosed().subscribe((result: CreateOperationTypeDTO | undefined) => {
       if (result) {
         // Handle the result data here, e.g., add it to your data array

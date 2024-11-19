@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CreateOperationTypeDTO} from '../../models/operation-types/createOperationTypeDTO';
 import {OperationType} from '../../models/operation-types/operationType';
@@ -13,23 +13,35 @@ export class OperationTypesService {
 
   constructor(private http: HttpClient, @Inject('API_URL') private apiUrl: string) { }
 
+  private getAuthHeaders(token: string): HttpHeaders {
+    console.log("Header token:", token);
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
   getItems(): Observable<OperationType[]> {
-    return this.http.get<OperationType[]>(`${this.apiUrl}/OperationType`);
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.get<OperationType[]>(`${this.apiUrl}/OperationType`,{ headers });
   }
 
   createItem(operationType: CreateOperationTypeDTO): Observable<CreateOperationTypeDTO> {
-    return this.http.post<CreateOperationTypeDTO>(`${this.apiUrl}/OperationType`, operationType);
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.post<CreateOperationTypeDTO>(`${this.apiUrl}/OperationType`, operationType, { headers });
   }
 
   updateItem(id: string, operationType: any): Observable<UpdateOperationTypeDTO> {
-    return this.http.put<any>(`${this.apiUrl}/OperationType/update/${id}`, operationType);
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.put<any>(`${this.apiUrl}/OperationType/update/${id}`, operationType, { headers });
   }
 
   deleteItem(id: string): Observable<OperationType> {
-    return this.http.put<OperationType>(`${this.apiUrl}/OperationType/delete/${id}`, null);
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.put<OperationType>(`${this.apiUrl}/OperationType/delete/${id}`, null, { headers });
   }
 
   searchItems(filter: SearchOperationTypeDTO): Observable<OperationType[]> {
+    const headers = this.getAuthHeaders(this.getToken());
     // Construct query parameters from the filter object
     let params = new HttpParams();
 
@@ -50,6 +62,13 @@ export class OperationTypesService {
     }
 
     return this.http.get<OperationType[]>(
-      `${this.apiUrl}/OperationType/search`, { params }
-    );  }
+      `${this.apiUrl}/OperationType/search`, { headers, params }
+    );
+  }
+
+  getToken(): any {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem("access_token");
+    }
+  }
 }
