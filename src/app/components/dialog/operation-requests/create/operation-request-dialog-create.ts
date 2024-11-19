@@ -9,6 +9,7 @@ import {CreateOperationRequestDTO} from '../../../../models/operation-requests/c
 import { CommonModule } from '@angular/common';
 import { OperationType } from '../../../../models/operation-types/operationType';
 import { OperationRequestService } from '../../../../services/operation-requests/operation-requests.service';
+import { Patient } from '../../../../models/patients/patient';
 
 @Component({
   selector: 'app-operation-requests-dialog-create',
@@ -29,20 +30,22 @@ import { OperationRequestService } from '../../../../services/operation-requests
 export class OperationRequestDialogCreate {
   operationRequestForm: FormGroup;
   operationTypes: OperationType[] = []; // Lista de tipos de operação
-  
+  patients: Patient[] = []; // Lista de tipos de operação
+
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<OperationRequestDialogCreate>,
     private operationRequestService: OperationRequestService // Serviço para buscar Operation Types
   ) {
     this.operationRequestForm = this.fb.group({
-      pacientid: [''],
+      patientEmail: [''],
       doctorid: [''],
       operationTypeName: [''],
       deadline: [''],
       priority: ['']
     });
-
+    this.loadPatients();
     this.loadOperationTypes(); 
    }
 
@@ -61,13 +64,38 @@ export class OperationRequestDialogCreate {
     );
   }
 
+  loadPatients(): void {
+    this.operationRequestService.getPatients().subscribe(
+      (data: Patient[]) => {
+        this.patients = data;
+        console.log('Patients loaded:', this.patients);
+      },
+      (error) => {
+        console.error('Error fetching operation types', error);
+      }
+    );
+  }
+
+
   onSubmit(): void {
     if (this.operationRequestForm.valid) {
     // Buscar o ID do Operation Type pelo nome digitado
+    const patientEmail = this.operationRequestForm.value.patientEmail.trim();
     const operationTypeName = this.operationRequestForm.value.operationTypeName.trim();
     const selectedType = this.operationTypes.find(
       type => type.name.toLowerCase() === operationTypeName.toLowerCase()
     );
+    const patientSelected = this.patients.find(
+      p => p.user.email.value.toLowerCase() === patientEmail.toLowerCase()
+    );
+    console.log('Patient selected:', patientSelected);
+
+    if (!patientSelected) {
+      console.error(`Operation Type "${patientEmail}" not found in`, this.patients);
+      alert(`Patient with email "${patientEmail}" not found.`);
+      return;
+    }
+
 
     if (!selectedType) {
       // Caso o nome digitado seja inválido
@@ -75,12 +103,12 @@ export class OperationRequestDialogCreate {
       alert(`Operation Type "${operationTypeName}" not found. Please try again.`);
       return;
     }
-
+      
     console.log('Selected Operation Type:', selectedType);
 
       // Convert form data into an OperationRequest object
       const operationRequestData: CreateOperationRequestDTO = {
-        pacientid: this.operationRequestForm.value.pacientid,
+        pacientid: patientSelected.medicalRecordNumber,
         doctorid: this.operationRequestForm.value.doctorid,
         operationTypeId: selectedType.operationTypeId, // Inserir o ID correspondente
         deadline: this.operationRequestForm.value.deadline,
