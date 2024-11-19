@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {catchError, Observable, Subscription, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CreatePatientDTO} from '../../models/patients/createPatientDTO';
 
@@ -11,9 +11,7 @@ export class PatientsService {
   constructor(private http: HttpClient, @Inject('API_URL') private apiUrl: string) { }
 
   createItem(patient: CreatePatientDTO): Observable<any> {
-    console.log("post to create. DTO: ", patient);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
     return this.http.post<any>(`${this.apiUrl}/Patients/register/patient`, patient, { headers, responseType: 'text' as 'json' });
   }
 }
