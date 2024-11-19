@@ -6,6 +6,7 @@ import {OperationRequest} from '../../models/operation-requests/operationRequest
 import {UpdateOperationRequestDTO} from '../../models/operation-requests/updateOperationRequestDTO';
 import {SearchOperationRequestDTO} from '../../models/operation-requests/searchOperationRequestsDTO';
 import { OperationType } from '../../models/operation-types/operationType';
+import { Patient } from '../../models/patients/patient';
 
 @Injectable({
   providedIn: 'root'
@@ -61,4 +62,9 @@ export class OperationRequestService {
     getOperationTypes(): Observable<OperationType[]> {
       return this.http.get<OperationType[]>(`${this.apiUrl}/OperationType`);
     }
+
+    getPatients(): Observable<Patient[]> {
+      return this.http.get<Patient[]>(`${this.apiUrl}/Patients`);
+    }
+    
 }

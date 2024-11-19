@@ -31,6 +31,7 @@ import {
 import {SearchOperationRequestDTO} from '../../models/operation-requests/searchOperationRequestsDTO';
 import { OperationTypesService } from '../../services/operation-types/operation-types.service';
 import { OperationType } from '../../models/operation-types/operationType';
+import { Patient } from '../../models/patients/patient';
 
 
 
@@ -78,10 +79,12 @@ export class StaffComponent implements OnInit, AfterViewInit {
   }
 
   operationTypes: OperationType[] = [];
+  patients: Patient[] = []; // Lista de pacientes
 
   ngOnInit() {
     this.loadOperationRequests();
     this.loadOperationTypes();
+    this.loadPatients(); // Carregar pacientes
     
   }
 
@@ -113,10 +116,25 @@ export class StaffComponent implements OnInit, AfterViewInit {
     );
   }
 
+  loadPatients(): void {
+    this.operationRequestService.getPatients().subscribe(
+      (data: Patient[]) => {
+        this.patients = data;
+      },
+      (error) => {
+        console.error('Error fetching patients', error);
+      }
+    );
+  }
 
   getOperationTypeName(operationTypeId: string): string {
     const operationType = this.operationTypes.find(type => type.operationTypeId === operationTypeId);
     return operationType ? operationType.name : 'Unknown';
+  }
+
+  getPatientName(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.user.name : 'Unknown';
   }
 
 

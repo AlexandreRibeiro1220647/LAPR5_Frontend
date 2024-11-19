@@ -9,8 +9,8 @@
 
     <!-- Patient ID Column -->
     <ng-container matColumnDef="pacientId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Patient ID"> Patient ID </th>
-      <td mat-cell *matCellDef="let element"> {{ element.patientId }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Pacient Name"> Pacient </th>
+      <td mat-cell *matCellDef="let element"> {{ getPatientName(element.patientId) }} </td>
     </ng-container>
 
     <!-- Doctor ID Column -->
