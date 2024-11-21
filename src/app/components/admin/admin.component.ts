@@ -20,8 +20,8 @@ export class AdminComponent {
     this.router.navigate(['admin/operation-types']);
   }
 
-  toBlaBla() {
-    this.router.navigate(['under-dev']); // alterem para o vosso (nome do metodo tbm)
+  toStaff() {
+    this.router.navigate(['admin/staff']); // alterem para o vosso (nome do metodo tbm)
   }
 
   toBlaBla2() {
