@@ -1,0 +1,51 @@
+
+
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">
+
+  <!-- Full Name Column -->
+  <ng-container matColumnDef="fullName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Full Name"> Full Name </th>
+    <td mat-cell *matCellDef="let element"> {{ element.fullName }} </td>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Email"> Email </th>
+    <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+  </ng-container>
+
+  <!-- Phone Column -->
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Phone"> Phone </th>
+    <td mat-cell *matCellDef="let element"> {{ element.phone }} </td>
+  </ng-container>
+
+  <!-- Specialization Column -->
+  <ng-container matColumnDef="specialization">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Specialization"> Specialization </th>
+    <td mat-cell *matCellDef="let element"> {{ element.specialization }} </td>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Status"> Status </th>
+    <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+  </ng-container>
+
+  <!-- Header and Row Definitions -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="toggleSelection(row)"
+      [class.selected]="selection.isSelected(row)">
+  </tr>
+
+</table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+<div class="button-container">
+  <button mat-flat-button (click)="openCreateDialog()" class="create-button">Create</button>
+  <button mat-flat-button (click)="openEditDialog()" class="edit-button">Edit</button>
+  <button mat-flat-button (click)="inactivateStaff()" class="delete-button">Inactivate</button>
+  <button mat-flat-button (click)="openSearchDialog()" class="search-button">Search</button>
+</div>
