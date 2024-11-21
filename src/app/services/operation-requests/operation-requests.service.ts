@@ -15,24 +15,38 @@ import { Staff } from '../../models/staff/staff';
 export class OperationRequestService {
   constructor(private http: HttpClient, @Inject('API_URL') private apiUrl: string) { }
 
+  private getAuthHeaders(token: string): HttpHeaders {
+    console.log("Header token:", token);
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
   getItems(): Observable<OperationRequest[]> {
-    return this.http.get<OperationRequest[]>(`${this.apiUrl}/operations`);
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.get<OperationRequest[]>(`${this.apiUrl}/operations`,{ headers });
   }
 
   createItem(operationRequest: CreateOperationRequestDTO): Observable<CreateOperationRequestDTO> {
-    return this.http.post<CreateOperationRequestDTO>(`${this.apiUrl}/operations/create`, operationRequest)
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.post<CreateOperationRequestDTO>(`${this.apiUrl}/operations/create`, operationRequest,{ headers })
   }
 
 
   updateItem(id: string, operationRequest: any): Observable<UpdateOperationRequestDTO> {
-    return this.http.put<any>(`${this.apiUrl}/operations/update/${id}`, operationRequest);
+    const headers = this.getAuthHeaders(this.getToken());
+
+    return this.http.put<any>(`${this.apiUrl}/operations/update/${id}`, operationRequest,{ headers });
   }
 
   deleteItem(id: string): Observable<OperationRequest> {
-    return this.http.delete<OperationRequest>(`${this.apiUrl}/operations?operationId=${id}`);
+    const headers = this.getAuthHeaders(this.getToken());
+    return this.http.delete<OperationRequest>(`${this.apiUrl}/operations?operationId=${id}`,{ headers });
   }
 
   searchItems(filter: SearchOperationRequestDTO): Observable<OperationRequest[]> {
+    const headers = this.getAuthHeaders(this.getToken());
+
     // Construct query parameters from the filter object
     let params = new HttpParams();
 
@@ -57,19 +71,30 @@ export class OperationRequestService {
     }
 
     return this.http.get<OperationRequest[]>(
-      `${this.apiUrl}/operations/search`, { params }
+      `${this.apiUrl}/operations/search`, { params , headers }
     );  }
 
     getOperationTypes(): Observable<OperationType[]> {
-      return this.http.get<OperationType[]>(`${this.apiUrl}/OperationType`);
+      const headers = this.getAuthHeaders(this.getToken());
+
+      return this.http.get<OperationType[]>(`${this.apiUrl}/OperationType`,{ headers });
     }
 
     getPatients(): Observable<Patient[]> {
-      return this.http.get<Patient[]>(`${this.apiUrl}/Patients`);
+      const headers = this.getAuthHeaders(this.getToken());
+
+      return this.http.get<Patient[]>(`${this.apiUrl}/Patients`,{ headers });
     }
 
     getStaff(): Observable<Staff[]> {
-      return this.http.get<Staff[]>(`${this.apiUrl}/staff`);
+      const headers = this.getAuthHeaders(this.getToken());
+
+      return this.http.get<Staff[]>(`${this.apiUrl}/staff`,{ headers });
     }
     
+    getToken(): any {
+      if (typeof window !== 'undefined') {
+        return sessionStorage.getItem("access_token");
+      }
+    }
 }
