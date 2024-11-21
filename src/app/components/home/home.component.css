@@ -8,7 +8,9 @@
 
 
 /* Position the first button with absolute positioning */
-.home-container .login_button {
+.home-container .login_button,
+home-container .logout_button
+{
   padding: 23px 37px;
   font-size: 16px;
   cursor: pointer;
@@ -23,7 +25,9 @@
 }
 
 /* Hover effect for button1 */
-.home-container .login_button:hover {
+.home-container .login_button:hover,
+home-container .logout_button:hover
+{
   background-color: rgb(164, 193, 216, 0.6);
   color: rgb(49, 81, 102);
 }

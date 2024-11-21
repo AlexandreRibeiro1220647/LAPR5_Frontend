@@ -1,7 +1,11 @@
 <div class="content">
   <div class="home-container">
-    <button mat-flat-button (click)="login()" class="login_button">Login</button>
-    <button mat-stroked-button (click)="signup()" class="sign_up_button">Sign up</button>
+    <!-- Show "Login" and "Sign up" buttons if the user is NOT logged in -->
+    <button *ngIf="!isLoggedIn" mat-flat-button (click)="login()" class="login_button">Login</button>
+    <button *ngIf="!isLoggedIn" mat-stroked-button (click)="signup()" class="sign_up_button">Sign up</button>
+
+    <!-- Show "Logout" button if the user IS logged in -->
+    <button *ngIf="isLoggedIn" mat-flat-button (click)="logout()" class="logout_button">Logout</button>
   </div>
 </div>
 
