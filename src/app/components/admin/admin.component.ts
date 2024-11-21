@@ -17,7 +17,7 @@ export class AdminComponent {
   constructor(private router: Router) {}
 
   toOperationType() {
-    this.router.navigate(['admin/operation-types']);
+    this.router.navigate(['admin/operation-type']);
   }
 
   toStaff() {

@@ -18,7 +18,7 @@ export const routes: Routes = [
       { path: 'operation-type', component: OperationTypeComponent },
       { path: 'staff', component: StaffComponente}, // alterem para o vosso
       { path: 'component3', component: OperationTypeComponent }, // alterem para o vosso
-      { path: '', redirectTo: 'operation-type', pathMatch: 'full' }, // Default child route
+      { path: 'operation-type', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
   { path: '', component: HomeComponent },

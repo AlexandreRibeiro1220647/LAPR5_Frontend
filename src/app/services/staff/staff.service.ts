@@ -21,19 +21,19 @@ export class StaffService {
   // Obter todos os membros do staff
   getStaff(): Observable<Staff[]> {
     const headers = this.getAuthHeaders(this.getToken()!);
-    return this.http.get<Staff[]>(`${this.apiUrl}/api/staff`, { headers });
+    return this.http.get<Staff[]>(`${this.apiUrl}/staff`, { headers });
   }
 
   // Criar um novo membro do staff
   createStaff(dto: CreateStaffDTO): Observable<CreateStaffDTO> {
     const headers = this.getAuthHeaders(this.getToken()!);
-    return this.http.post<CreateStaffDTO>(`${this.apiUrl}/api/staff/create`, dto, { headers });
+    return this.http.post<CreateStaffDTO>(`${this.apiUrl}/staff/create`, dto, { headers });
   }
 
   // Atualizar um membro do staff
   updateStaff(id: string, dto: UpdateStaffDto): Observable<UpdateStaffDto> {
     const headers = this.getAuthHeaders(this.getToken()!);
-    return this.http.put<UpdateStaffDto>(`${this.apiUrl}/api/staff/update/${id}`, dto, { headers });
+    return this.http.put<UpdateStaffDto>(`${this.apiUrl}/staff/update/${id}`, dto, { headers });
   }
 
   // Inativar um membro do staff
@@ -69,7 +69,7 @@ export class StaffService {
       params = params.set('status', filter.status);
     }
 
-    return this.http.get<Staff[]>(`${this.apiUrl}/api/staff/search`, { headers, params });
+    return this.http.get<Staff[]>(`${this.apiUrl}/staff/search`, { headers, params });
   }
 
   // Get the authorization token
