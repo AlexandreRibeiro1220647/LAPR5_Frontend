@@ -14,8 +14,8 @@
 
     <!-- Doctor ID Column -->
     <ng-container matColumnDef="doctorId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Doctor ID"> Doctor ID </th>
-      <td mat-cell *matCellDef="let element"> {{ element.doctorId }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Doctor Name"> Doctor </th>
+      <td mat-cell *matCellDef="let element"> {{ getStaffName(element.doctorId) }} </td>
     </ng-container>
 
     <!-- Operation Type ID Column -->
