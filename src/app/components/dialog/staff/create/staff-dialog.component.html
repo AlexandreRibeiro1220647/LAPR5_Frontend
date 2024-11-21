@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>Create Staff</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="staffForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="fullName" placeholder="Enter full name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" placeholder="Enter phone number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Specialization</mat-label>
+      <input matInput formControlName="specialization" placeholder="Enter specialization" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="ACTIVE">Active</mat-option>
+        <mat-option value="INACTIVE">Inactive</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Availability Slots Section -->
+    <h3>Availability Slots</h3>
+    <div formArrayName="availabilitySlots">
+      <div *ngFor="let slot of availabilitySlots.controls; let i = index" [formGroupName]="i" class="slot-item">
+        <mat-form-field appearance="fill" class="half-width">
+          <mat-label>Start Time</mat-label>
+          <input matInput type="datetime-local" formControlName="startTime" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="half-width">
+          <mat-label>End Time</mat-label>
+          <input matInput type="datetime-local" formControlName="endTime" />
+        </mat-form-field>
+
+        <button mat-icon-button color="warn" (click)="removeSlot(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="addSlot()">Add Slot</button>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Create</button>
+</mat-dialog-actions>
