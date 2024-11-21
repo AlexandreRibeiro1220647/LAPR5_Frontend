@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
-import {NgOptimizedImage} from '@angular/common';
+import {CommonModule, NgIf, NgOptimizedImage} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {LoginService} from '../../services/login/login.service';
 import {JWT_OPTIONS} from '@auth0/angular-jwt';
@@ -17,9 +17,11 @@ interface Token {
   selector: 'app-home',
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
     NgOptimizedImage,
-    MatButtonModule
+    MatButtonModule,
+    NgIf
   ],
   providers: [
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
@@ -28,9 +30,13 @@ interface Token {
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+  isLoggedIn: boolean = false;
 
   constructor(private router: Router, private loginService: LoginService, private patientsService: PatientsService, public dialog: MatDialog) {
+  }
+  ngOnInit() {
+    this.isLoggedIn = this.loginService.isLoggedIn();
   }
 
   login() {
@@ -45,17 +51,22 @@ export class HomeComponent {
               // Now you can use the token, e.g., store it, or send it in headers for authenticated requests
               if (token) {
                 sessionStorage.setItem("access_token", token.accessToken);
+                sessionStorage.setItem("session_id", sessionId);
                 console.log(token);
                 // Check the role from the token (or API call to fetch the role)
                 const role = this.loginService.getRolesFromToken(token.accessToken); // Extract the role from decoded token
                 if (role) {
                   if (role[0] === 'Admin') {
+                    this.loginService.login();
                     this.router.navigate(['admin']);
                   } else if (role[0] === 'Patient') {
+                    this.loginService.login();
                     this.router.navigate(['patient']);
                   } else if (role[0] === 'Doctor') {
+                    this.loginService.login();
                     this.router.navigate(['staff']);
                   } else {
+                    this.loginService.logout();
                     this.router.navigate(['']);
                   }
                 }
@@ -94,7 +105,10 @@ export class HomeComponent {
                   if (token) {
                     this.patientsService.createItem(result).subscribe({
                       next: (response) => {
-                        console.log('Operation created successfully:', response);
+                        console.log('Patient created successfully:', response);
+
+                        sessionStorage.setItem("access_token", token.accessToken);
+                        sessionStorage.setItem("session_id", sessionId);
 
                         console.log(token);
                         // Check the role from the token (or API call to fetch the role)
@@ -102,8 +116,10 @@ export class HomeComponent {
                         console.log("role", role);
                         if (role) {
                           if (role[0] === 'Patient') {
+                            this.loginService.login();
                             this.router.navigate(['patient']);
                           } else {
+                            this.loginService.logout();
                             this.router.navigate(['']);
                             console.error("Logged user doesnt have patient role")
                           }
@@ -126,5 +142,9 @@ export class HomeComponent {
         });
       }
     });
+  }
+
+  logout() {
+    this.loginService.logout();
   }
 }

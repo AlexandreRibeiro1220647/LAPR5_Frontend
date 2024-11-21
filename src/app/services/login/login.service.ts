@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 interface Token {
   accessToken: string;
@@ -11,7 +11,37 @@ interface Token {
   providedIn: 'root'
 })
 export class LoginService {
+  private readonly storageKey = 'isLoggedIn';
+
   constructor(private jwtHelper: JwtHelperService, private http: HttpClient, @Inject('API_URL') private apiUrl: string) {}
+
+  isLoggedIn(): boolean {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem(this.storageKey) === 'true';
+    }
+    return false;
+  }
+
+  login() {
+    sessionStorage.setItem(this.storageKey, 'true');
+  }
+
+  logout() {
+    const sessionId = sessionStorage.getItem("session_id");
+    console.log("Loggin out : ", sessionId);
+    sessionStorage.setItem(this.storageKey, 'false');
+    sessionStorage.setItem("access_token", "");
+    sessionStorage.setItem("session_id", "");
+
+    return this.http.post(`${this.apiUrl}/User/logout/${sessionId}`, {}).subscribe({
+      next: (response) => {
+        console.log("Logout successful:", response);
+      },
+      error: (error) => {
+        console.error("Logout error:", error);
+      }
+    });
+  }
 
   authenticate(): Observable<any> {
     console.log("Authenticate");
