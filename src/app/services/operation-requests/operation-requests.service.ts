@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import {CreateOperationRequestDTO} from '../../models/operation-requests/createOperationRequestDTO';
 import {OperationRequest} from '../../models/operation-requests/operationRequest';
@@ -7,6 +7,7 @@ import {UpdateOperationRequestDTO} from '../../models/operation-requests/updateO
 import {SearchOperationRequestDTO} from '../../models/operation-requests/searchOperationRequestsDTO';
 import { OperationType } from '../../models/operation-types/operationType';
 import { Patient } from '../../models/patients/patient';
+import { Staff } from '../../models/staff/staff';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,10 @@ export class OperationRequestService {
 
     getPatients(): Observable<Patient[]> {
       return this.http.get<Patient[]>(`${this.apiUrl}/Patients`);
+    }
+
+    getStaff(): Observable<Staff[]> {
+      return this.http.get<Staff[]>(`${this.apiUrl}/staff`);
     }
     
 }

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { OperationType } from '../../../../models/operation-types/operationType';
 import { OperationRequestService } from '../../../../services/operation-requests/operation-requests.service';
 import { Patient } from '../../../../models/patients/patient';
+import { Staff } from '../../../../models/staff/staff';
 
 @Component({
   selector: 'app-operation-requests-dialog-create',
@@ -31,6 +32,7 @@ export class OperationRequestDialogCreate {
   operationRequestForm: FormGroup;
   operationTypes: OperationType[] = []; // Lista de tipos de operação
   patients: Patient[] = []; // Lista de tipos de operação
+  staffs: Staff[] = []; // Lista de tipos de operação
 
 
   constructor(
@@ -40,13 +42,14 @@ export class OperationRequestDialogCreate {
   ) {
     this.operationRequestForm = this.fb.group({
       patientEmail: [''],
-      doctorid: [''],
+      doctorEmail: [''],
       operationTypeName: [''],
       deadline: [''],
       priority: ['']
     });
     this.loadPatients();
     this.loadOperationTypes(); 
+    this.loadDoctors();
    }
 
   onCancel(): void {
@@ -76,11 +79,25 @@ export class OperationRequestDialogCreate {
     );
   }
 
+  
+  loadDoctors(): void {
+    this.operationRequestService.getStaff().subscribe(
+      (data: Staff[]) => {
+        this.staffs = data;
+        console.log('Staffs loaded:', this.staffs);
+      },
+      (error) => {
+        console.error('Error fetching operation types', error);
+      }
+    );
+  }
+
 
   onSubmit(): void {
     if (this.operationRequestForm.valid) {
     // Buscar o ID do Operation Type pelo nome digitado
     const patientEmail = this.operationRequestForm.value.patientEmail.trim();
+    const doctorEmail = this.operationRequestForm.value.doctorEmail.trim();
     const operationTypeName = this.operationRequestForm.value.operationTypeName.trim();
     const selectedType = this.operationTypes.find(
       type => type.name.toLowerCase() === operationTypeName.toLowerCase()
@@ -93,6 +110,20 @@ export class OperationRequestDialogCreate {
     if (!patientSelected) {
       console.error(`Operation Type "${patientEmail}" not found in`, this.patients);
       alert(`Patient with email "${patientEmail}" not found.`);
+      return;
+    }
+
+    
+    const staffSelected = this.staffs.find(
+      p => p.user.email.value.toLowerCase() === doctorEmail.toLowerCase()
+    );
+    console.log('Doctor selected:', staffSelected);
+    
+    console.log('Selected Doctor ID:', staffSelected?.licenseNumber);
+
+    if (!staffSelected) {
+      console.error(`Oc "${doctorEmail}" not found in`, this.staffs);
+      alert(`Patient with email "${doctorEmail}" not found.`);
       return;
     }
 
@@ -109,7 +140,7 @@ export class OperationRequestDialogCreate {
       // Convert form data into an OperationRequest object
       const operationRequestData: CreateOperationRequestDTO = {
         pacientid: patientSelected.medicalRecordNumber,
-        doctorid: this.operationRequestForm.value.doctorid,
+        doctorid: staffSelected.licenseNumber,
         operationTypeId: selectedType.operationTypeId, // Inserir o ID correspondente
         deadline: this.operationRequestForm.value.deadline,
         priority: this.operationRequestForm.value.priority

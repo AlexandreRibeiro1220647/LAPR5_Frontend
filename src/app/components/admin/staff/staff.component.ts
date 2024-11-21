@@ -120,7 +120,7 @@ export class StaffComponente implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result: UpdateStaffDto | undefined) => {
       if (result) {
-        this.staffService.updateStaff(selectedStaff.id, result).subscribe({
+        this.staffService.updateStaff(selectedStaff.licenseNumber, result).subscribe({
           next: () => {
             console.log('Staff updated successfully');
             this.loadStaff();
@@ -168,7 +168,7 @@ export class StaffComponente implements OnInit, AfterViewInit {
       status: StaffStatus.INACTIVE,
     };
 
-    this.staffService.inactivateStaff(selectedStaff.id, updateDto).subscribe({
+    this.staffService.inactivateStaff(selectedStaff.licenseNumber, updateDto).subscribe({
       next: () => {
         console.log('Staff inactivated successfully');
         this.loadStaff();
