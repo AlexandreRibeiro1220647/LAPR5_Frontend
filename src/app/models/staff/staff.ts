@@ -2,7 +2,7 @@ import {Slot} from './slot';
 import {StaffStatus} from './staffstatus';
 
 export interface Staff {
-  id: string;
+  licenseNumber: string;
   specialization: string;
   phone: string;
   availabilitySlots: Slot[];

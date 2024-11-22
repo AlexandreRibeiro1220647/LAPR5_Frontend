@@ -32,6 +32,7 @@ import {SearchOperationRequestDTO} from '../../models/operation-requests/searchO
 import { OperationTypesService } from '../../services/operation-types/operation-types.service';
 import { OperationType } from '../../models/operation-types/operationType';
 import { Patient } from '../../models/patients/patient';
+import { Staff } from '../../models/staff/staff';
 
 
 
@@ -79,12 +80,15 @@ export class StaffComponent implements OnInit, AfterViewInit {
   }
 
   operationTypes: OperationType[] = [];
-  patients: Patient[] = []; // Lista de pacientes
+  patients: Patient[] = []; 
+  staffs: Staff[] = []; 
+
 
   ngOnInit() {
     this.loadOperationRequests();
     this.loadOperationTypes();
-    this.loadPatients(); // Carregar pacientes
+    this.loadPatients(); 
+    this.loadStaffs();
     
   }
 
@@ -127,6 +131,18 @@ export class StaffComponent implements OnInit, AfterViewInit {
     );
   }
 
+  loadStaffs(): void {
+    this.operationRequestService.getStaff().subscribe(
+      (data: Staff[]) => {
+        this.staffs = data;
+      },
+      (error) => {
+        console.error('Error fetching patients', error);
+      }
+    );
+  }
+
+
   getOperationTypeName(operationTypeId: string): string {
     const operationType = this.operationTypes.find(type => type.operationTypeId === operationTypeId);
     return operationType ? operationType.name : 'Unknown';
@@ -135,6 +151,11 @@ export class StaffComponent implements OnInit, AfterViewInit {
   getPatientName(patientId: string): string {
     const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
     return patient ? patient.user.name : 'Unknown';
+  }
+
+  getStaffName(doctorId: string): string {
+    const doctor = this.staffs.find(p => p.licenseNumber === doctorId);
+    return doctor ? doctor.user.name : 'Unknown';
   }
 
 

@@ -5,13 +5,13 @@
   <!-- Full Name Column -->
   <ng-container matColumnDef="fullName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Full Name"> Full Name </th>
-    <td mat-cell *matCellDef="let element"> {{ element.fullName }} </td>
+    <td mat-cell *matCellDef="let element"> {{ element.user.name }} </td>
   </ng-container>
 
   <!-- Email Column -->
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Email"> Email </th>
-    <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+    <td mat-cell *matCellDef="let element"> {{ element.user.email.value }} </td>
   </ng-container>
 
   <!-- Phone Column -->
