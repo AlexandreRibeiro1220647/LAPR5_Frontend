@@ -49,12 +49,12 @@ export class StaffService {
     const headers = this.getAuthHeaders(this.getToken());
     let params = new HttpParams();
 
-    if (filter.fullName) {
-      params = params.set('fullName', filter.fullName);
+    if (filter.user.name) {
+      params = params.set('fullName', filter.user.name);
     }
 
-    if (filter.email) {
-      params = params.set('email', filter.email);
+    if (filter.user.email) {
+      params = params.set('email', filter.user.email.value);
     }
 
     if (filter.phone) {
