@@ -11,8 +11,8 @@ export class AlgavService {
 
   constructor(private http: HttpClient, @Inject('PLANNING_URL') private planning_url: string) { }
 
-  getItems(): Observable<ReturnToken> {
-    return this.http.get<ReturnToken>(`${this.planning_url}/obtain_better_solution`);
+  getItems(operationId: string, date: number): Observable<ReturnToken> {
+    return this.http.get<ReturnToken>(`${this.planning_url}/obtain_better_solution?or=${operationId}&date=${date}`);
   }
 
 }
