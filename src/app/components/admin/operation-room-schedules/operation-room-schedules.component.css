@@ -1,11 +1,13 @@
-.timeline {
+.timeline,
+.doctor-timeline .timeline{
   position: relative;
   width: 100%;
   height: 50px; /* Adjust height as needed */
   background-color: rgb(165, 195, 217, 0.5);
 }
 
-.timeline-slot {
+.timeline-slot,
+.doctor-timeline .timeline-slot{
   position: absolute;
   height: 100%; /* Ensure it fills the timeline height */
   display: flex;
@@ -18,12 +20,14 @@
   text-align: center; /* Center text horizontally */
 }
 
-.slot-time {
+.slot-time
+.doctor-timeline .slot-time{
   font-weight: bold; /* Highlight the time */
   margin-bottom: 2px; /* Add spacing between time and details */
 }
 
-.slot-details {
+.slot-details,
+.doctor-timeline .slot-time{
   font-size: 0.75rem; /* Slightly smaller font for details */
 }
 
@@ -49,4 +53,15 @@
 {
   background-color: rgb(164, 193, 216, 0.6);
   color: white;
+}
+
+.opRoomId,
+.doctor-timeline .doctorId
+{
+  font-size: 1.5rem; /* Slightly smaller font for details */
+  color: rgb(225, 226, 230);
+}
+
+.doctor-timeline {
+  margin-bottom: 20px;
 }

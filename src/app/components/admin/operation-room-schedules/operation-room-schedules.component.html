@@ -1,9 +1,12 @@
 <div *ngIf="agOpRoomBetter.length > 0">
+  <div class="opRoomId">
+    <strong>{{ opRoomId }}</strong>
+  </div>
   <div class="timeline">
     <div *ngFor="let slot of agOpRoomBetter" class="timeline-slot"
          [style.width]="calculateSlotWidth(slot[0], slot[1]) + '%'"
          [style.left]="calculateSlotPosition(slot[0]) + '%'"
-         [style.background-color]="'rgb(47, 54, 41, 0.6)'">
+         [style.background-color]="'rgb(34, 38, 24, 0.7)'">
       <div class="slot-time">
         <!-- Display start and end times above -->
         <span>{{ formatTime(slot[0]) }} - {{ formatTime(slot[1]) }}</span>
@@ -15,6 +18,29 @@
     </div>
   </div>
 </div>
+<div *ngIf="lagDoctorsBetter.length > 0">
+  <div *ngFor="let doctor of lagDoctorsBetter" class="doctor-timeline">
+    <!-- Doctor ID -->
+    <div class="doctorId">
+      <strong>{{ doctor[0] }}</strong> <!-- Doctor ID -->
+    </div>
+    <!-- Timeline -->
+    <div class="timeline">
+      <div *ngFor="let slot of doctor[1]" class="timeline-slot"
+           [style.width]="calculateSlotWidth(slot[0], slot[1]) + '%'"
+           [style.left]="calculateSlotPosition(slot[0]) + '%'"
+           [style.background-color]="'rgb(67, 76, 63, 0.6)'">
+        <div class="slot-time">
+          <span>{{ formatTime(slot[0]) }} - {{ formatTime(slot[1]) }}</span>
+        </div>
+        <div class="slot-details">
+          <span>{{ slot[2] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="button-container">
   <button mat-flat-button (click)="openDialog()" class="dialog-button">Search</button>
 </div>

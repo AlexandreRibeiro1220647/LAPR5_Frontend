@@ -22,7 +22,9 @@ import {MatButton} from '@angular/material/button';  // Import Timeline from vis
 })
 export class OperationRoomSchedulesComponent implements OnInit{
   agOpRoomBetter: string[][] = [];  // Holds the slots
+  lagDoctorsBetter: string[][][] = []; // Holds the doctor schedules
   totalDayMinutes = 1440;  // Total minutes in a day
+  opRoomId: string = "";
 
   constructor(private algavService: AlgavService, public dialog: MatDialog) {}
 
@@ -63,9 +65,11 @@ export class OperationRoomSchedulesComponent implements OnInit{
         // Handle the result data here, e.g., add it to your data array
         this.algavService.getItems(result.opRoomId, result.date).subscribe({
           next: (data) => {
-            // Fetch the ag_op_room_better data from the service response
+            this.opRoomId = result.opRoomId;
             this.agOpRoomBetter = data.ag_op_room_better;
-            console.log('Fetched operation room schedule:', this.agOpRoomBetter);  // Debugging
+            this.lagDoctorsBetter = data.lag_doctors_better;
+            console.log('Fetched operation room schedule:', this.agOpRoomBetter); // Debugging
+            console.log('Fetched doctor schedules:', this.lagDoctorsBetter); // Debugging
           },
           error: (error) => {
             console.error('Error fetching operation room schedule:', error);
