@@ -41,8 +41,8 @@ export class StaffDialogEditComponent {
     @Inject(MAT_DIALOG_DATA) public data: UpdateStaffDto
   ) {
     this.staffForm = this.fb.group({
-      fullName: [data?.fullName || '', Validators.required],
-      email: [data?.email || '', [Validators.required, Validators.email]],
+      fullName: [data?.user.name || '', Validators.required],
+      email: [data?.user.email || '', [Validators.required, Validators.email]],
       phone: [data?.phone || '', Validators.required],
       specialization: [data?.specialization || '', Validators.required],
       status: [data?.status || StaffStatus.ACTIVE, Validators.required],
@@ -88,19 +88,25 @@ export class StaffDialogEditComponent {
   // Submit the form
   onSubmit(): void {
     if (this.staffForm.valid) {
-      const staffData: UpdateStaffDto = {
-        fullName: this.staffForm.value.fullName.trim(),
-        email: this.staffForm.value.email.trim(),
-        phone: this.staffForm.value.phone.trim(),
-        specialization: this.staffForm.value.specialization.trim(),
-        status: this.staffForm.value.status,
-        availabilitySlots: this.staffForm.value.availabilitySlots.map((slot: any) => ({
-          startTime: slot.startTime,
-          endTime: slot.endTime,
-        })),
+      const formValues = this.staffForm.value;
+
+      const updatedData: UpdateStaffDto = {
+        phone: formValues.phone,
+        specialization: formValues.specialization,
+        availabilitySlots: formValues.availabilitySlots,
+        status: formValues.status,
+        user: {
+          id: this.data.user.id, // Preserva o ID original
+          name: formValues.fullName, // Atualiza o nome
+          email: {
+            value: formValues.email, // Atualiza o email
+          },
+          role: this.data.user.role, // Preserva o role original
+        },
       };
 
-      this.dialogRef.close(staffData);
+      this.dialogRef.close(updatedData);
     }
   }
+
 }
