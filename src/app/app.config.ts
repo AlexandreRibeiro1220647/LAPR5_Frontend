@@ -20,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideClientHydration(),
     provideHttpClient(withFetch()), { provide: 'API_URL', useValue: environment.apiUrl },
     { provide: 'API_URL', useValue: environment.apiUrl },
+    { provide: 'PLANNING_URL', useValue: environment.planningUrl },
     provideAnimationsAsync(), // Providing the API URL
     provideAnimations(),
     importProvidersFrom(MatTableModule, MatButtonModule),

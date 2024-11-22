@@ -1,0 +1,29 @@
+.timeline {
+  position: relative;
+  width: 100%;
+  height: 50px; /* Adjust height as needed */
+  background-color: rgb(165, 195, 217, 0.5);
+}
+
+.timeline-slot {
+  position: absolute;
+  height: 100%; /* Ensure it fills the timeline height */
+  display: flex;
+  flex-direction: column; /* Stack text vertically */
+  align-items: center;
+  justify-content: center; /* Center text vertically */
+  color: white;
+  font-size: 0.8rem; /* Adjust text size for readability */
+  border-radius: 4px;
+  text-align: center; /* Center text horizontally */
+}
+
+.slot-time {
+  font-weight: bold; /* Highlight the time */
+  margin-bottom: 2px; /* Add spacing between time and details */
+}
+
+.slot-details {
+  font-size: 0.75rem; /* Slightly smaller font for details */
+}
+

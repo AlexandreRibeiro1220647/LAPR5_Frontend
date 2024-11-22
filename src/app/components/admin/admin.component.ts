@@ -27,4 +27,8 @@ export class AdminComponent {
   toBlaBla2() {
     this.router.navigate(['under-dev']); // alterem para o vosso
   }
+
+  toOperationRoomSchedule() {
+    this.router.navigate(['admin/operationRoomSchedule']);
+  }
 }

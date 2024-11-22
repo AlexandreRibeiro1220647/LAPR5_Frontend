@@ -1,0 +1,17 @@
+<div *ngIf="agOpRoomBetter.length > 0">
+  <div class="timeline">
+    <div *ngFor="let slot of agOpRoomBetter" class="timeline-slot"
+         [style.width]="calculateSlotWidth(slot[0], slot[1]) + '%'"
+         [style.left]="calculateSlotPosition(slot[0]) + '%'"
+         [style.background-color]="'rgb(47, 54, 41, 0.6)'">
+      <div class="slot-time">
+        <!-- Display start and end times above -->
+        <span>{{ formatTime(slot[0]) }} - {{ formatTime(slot[1]) }}</span>
+      </div>
+      <div class="slot-details">
+        <!-- Display the operation ID below -->
+        <span>{{ slot[2] }}</span>
+      </div>
+    </div>
+  </div>
+</div>

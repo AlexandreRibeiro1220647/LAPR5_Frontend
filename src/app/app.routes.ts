@@ -6,6 +6,9 @@ import {AdminComponent} from './components/admin/admin.component';
 import {UnderDevelopmentComponent} from './components/under-dev/under-development.component';
 import {OperationTypeComponent} from './components/admin/operation-type/operation-type.component';
 import {StaffComponente} from './components/admin/staff/staff.component';
+import {
+  OperationRoomSchedulesComponent
+} from './components/admin/operation-room-schedules/operation-room-schedules.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
@@ -18,6 +21,7 @@ export const routes: Routes = [
       { path: 'operation-type', component: OperationTypeComponent },
       { path: 'staff', component: StaffComponente}, // alterem para o vosso
       { path: 'component3', component: OperationTypeComponent }, // alterem para o vosso
+      { path: 'operationRoomSchedule', component: OperationRoomSchedulesComponent },
       { path: 'operation-type', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
