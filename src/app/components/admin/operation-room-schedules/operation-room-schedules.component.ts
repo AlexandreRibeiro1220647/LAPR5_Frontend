@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {JsonPipe, NgForOf, NgIf} from '@angular/common';
 import {AlgavService} from '../../../services/algav/algav.service';
-import {ReturnToken} from '../../../models/operation-schedules/returnToken';  // Import Timeline from vis-timeline
+import {MatDialog} from '@angular/material/dialog';
+import {OpScheduleParametersDTO} from '../../../models/operation-schedules/OpScheduleParametersDTO';
+import {
+  OperationRoomSchedulesDialogComponent
+} from '../../dialog/operation-room-schedules/operation-room-schedules-dialog.component';
+import {MatButton} from '@angular/material/button';  // Import Timeline from vis-timeline
 
 @Component({
   selector: 'app-operation-room-schedules',
@@ -9,7 +14,8 @@ import {ReturnToken} from '../../../models/operation-schedules/returnToken';  //
   imports: [
     NgIf,
     NgForOf,
-    JsonPipe
+    JsonPipe,
+    MatButton
   ],
   templateUrl: './operation-room-schedules.component.html',
   styleUrl: './operation-room-schedules.component.css'
@@ -18,40 +24,22 @@ export class OperationRoomSchedulesComponent implements OnInit{
   agOpRoomBetter: string[][] = [];  // Holds the slots
   totalDayMinutes = 1440;  // Total minutes in a day
 
-  constructor(private algavService: AlgavService) {}
+  constructor(private algavService: AlgavService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    const opId = "or1";
-    const date = 20241028;
-    this.algavService.getItems(opId, date).subscribe((data: ReturnToken) => {
-      // Fetch the ag_op_room_better data from the service response
-      this.agOpRoomBetter = data.ag_op_room_better;
-      console.log('Fetched operation room schedule:', this.agOpRoomBetter);  // Debugging
-    });
-    // Hardcoded testing data
-    this.agOpRoomBetter = [
-      ["520", "579", "so100000"],
-      ["580", "639", "so100004"],
-      ["640", "714", "so100005"],
-      ["715", "804", "so100002"],
-      ["805", "879", "so100003"],
-      ["880", "939", "so100001"],
-      ["1000", "1059", "so099999"]
-    ];
+
   }
 
 
   // Calculate the width of a slot based on the difference between start and finish time
   calculateSlotWidth(start: string, finish: string): number {
     const duration = Number(finish) - Number(start);
-    const percentageWidth = (duration / this.totalDayMinutes) * 100;
-    return percentageWidth;
+    return (duration / this.totalDayMinutes) * 100;
   }
 
   // Calculate the left position based on the start time of a slot
   calculateSlotPosition(start: string): number {
-    const percentagePosition = (Number(start) / this.totalDayMinutes) * 100;
-    return percentagePosition;
+    return (Number(start) / this.totalDayMinutes) * 100;
   }
 
   // Format time from 'HHmm' to 'HH:mm' without using slice
@@ -66,5 +54,25 @@ export class OperationRoomSchedulesComponent implements OnInit{
     return `${formattedHours}:${formattedMinutes}`;
   }
 
-
+  openDialog(): void {
+    const dialogRef = this.dialog.open(OperationRoomSchedulesDialogComponent, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe((result: OpScheduleParametersDTO | undefined) => {
+      if (result) {
+        // Handle the result data here, e.g., add it to your data array
+        this.algavService.getItems(result.opRoomId, result.date).subscribe({
+          next: (data) => {
+            // Fetch the ag_op_room_better data from the service response
+            this.agOpRoomBetter = data.ag_op_room_better;
+            console.log('Fetched operation room schedule:', this.agOpRoomBetter);  // Debugging
+          },
+          error: (error) => {
+            console.error('Error fetching operation room schedule:', error);
+          }
+        });
+        console.log('Room and Date:', result);
+      }
+    });
+  }
 }

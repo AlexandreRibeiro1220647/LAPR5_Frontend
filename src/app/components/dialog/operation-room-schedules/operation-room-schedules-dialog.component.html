@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Get Operation Room Schedule</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="operationForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Operation Room Id</mat-label>
+      <input matInput formControlName="opRoomId" placeholder="Enter operation room id (Ex: or1)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" placeholder="Enter date (Ex: 20241028)" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Submit</button>
+</mat-dialog-actions>
