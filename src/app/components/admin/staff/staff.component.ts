@@ -160,12 +160,18 @@ export class StaffComponente implements OnInit, AfterViewInit {
     }
 
     const updateDto: UpdateStaffDto = {
-      fullName: selectedStaff.user.name,
-      email: selectedStaff.user.email.value,
       phone: selectedStaff.phone,
       specialization: selectedStaff.specialization,
       availabilitySlots: selectedStaff.availabilitySlots,
       status: StaffStatus.INACTIVE,
+      user: {
+        id: selectedStaff.user.id,
+        name: selectedStaff.user.name, // Nome completo vem de selectedStaff.user.name
+        email: {
+          value: selectedStaff.user.email.value, // E-mail do usuário
+        },
+        role: selectedStaff.user.role, // Papel do usuário
+      },
     };
 
     this.staffService.inactivateStaff(selectedStaff.licenseNumber, updateDto).subscribe({
@@ -178,7 +184,6 @@ export class StaffComponente implements OnInit, AfterViewInit {
       },
     });
   }
-
 
   announceSortChange(event: any): void {
     console.log('Sort change announced:', event);
