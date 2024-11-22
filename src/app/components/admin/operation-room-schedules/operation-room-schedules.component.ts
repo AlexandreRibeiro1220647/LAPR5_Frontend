@@ -21,7 +21,9 @@ export class OperationRoomSchedulesComponent implements OnInit{
   constructor(private algavService: AlgavService) {}
 
   ngOnInit(): void {
-    this.algavService.getItems().subscribe((data: ReturnToken) => {
+    const opId = "or1";
+    const date = 20241028;
+    this.algavService.getItems(opId, date).subscribe((data: ReturnToken) => {
       // Fetch the ag_op_room_better data from the service response
       this.agOpRoomBetter = data.ag_op_room_better;
       console.log('Fetched operation room schedule:', this.agOpRoomBetter);  // Debugging
