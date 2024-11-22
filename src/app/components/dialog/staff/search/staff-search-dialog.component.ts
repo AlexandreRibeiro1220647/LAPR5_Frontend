@@ -50,16 +50,27 @@ export class StaffSearchDialogComponent {
   }
 
   onSubmit(): void {
-    if (this.staffForm.valid) {
-      const staffData: SearchStaffDTO = {
-        fullName: this.staffForm.value.fullName?.trim(),
-        email: this.staffForm.value.email?.trim(),
-        phone: this.staffForm.value.phone?.trim(),
-        specialization: this.staffForm.value.specialization?.trim(),
-        status: this.staffForm.value.status,
-      };
-
-      this.dialogRef.close(staffData);
+    if (this.staffForm.invalid) {
+      return;
     }
+
+    const formValues = this.staffForm.value;
+
+    const searchStaffDto: SearchStaffDTO = {
+      specialization: formValues.specialization || undefined, // Campo opcional
+      phone: formValues.phone || undefined, // Campo opcional
+      status: formValues.status || undefined, // Campo opcional
+      user: {
+        id: formValues.userId || '', // ID do usuário
+        name: formValues.name || '', // Nome do usuário
+        email: {
+          value: formValues.email || '', // Estrutura do e-mail
+        },
+        role: formValues.role || '', // Papel do usuário
+      },
+    };
+
+    this.dialogRef.close(searchStaffDto); // Fecha o diálogo e retorna o DTO criado
   }
+
 }
