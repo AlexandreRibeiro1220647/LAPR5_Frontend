@@ -40,8 +40,8 @@ export class StaffDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: CreateStaffDTO
   ) {
     this.staffForm = this.fb.group({
-      fullName: [data?.fullName || '', Validators.required],
-      email: [data?.email || '', [Validators.required, Validators.email]],
+      fullName: [data?.user.name || '', Validators.required],
+      email: [data?.user.email.value || '', [Validators.required, Validators.email]],
       phone: [data?.phone || '', Validators.required],
       specialization: [data?.specialization || '', Validators.required],
       status: [data?.status || StaffStatus.ACTIVE, Validators.required],
@@ -86,20 +86,27 @@ export class StaffDialogComponent {
 
   // Submit the form
   onSubmit(): void {
-    if (this.staffForm.valid) {
-      const staffData: CreateStaffDTO = {
-        fullName: this.staffForm.value.fullName.trim(),
-        email: this.staffForm.value.email.trim(),
-        phone: this.staffForm.value.phone.trim(),
-        specialization: this.staffForm.value.specialization.trim(),
-        status: this.staffForm.value.status,
-        availabilitySlots: this.staffForm.value.availabilitySlots.map((slot: any) => ({
-          startTime: slot.startTime,
-          endTime: slot.endTime,
-        })),
-      };
-
-      this.dialogRef.close(staffData);
+    if (this.staffForm.invalid) {
+      return;
     }
+
+    const formValues = this.staffForm.value;
+
+    const createStaffDto: CreateStaffDTO = {
+      specialization: formValues.specialization,
+      phone: formValues.phone,
+      availabilitySlots: formValues.availabilitySlots || [],
+      status: formValues.status || StaffStatus.ACTIVE,
+      user: {
+        id: formValues.userId || '', // Se necessário, adicionar um controle para ID
+        name: formValues.fullName, // Usa o campo fullName como o nome do usuário
+        email: {
+          value: formValues.email, // Estrutura para o e-mail
+        },
+        role: formValues.role || 'Staff', // Campo de role com valor padrão
+      },
+    };
+
+    this.dialogRef.close(createStaffDto); // Fecha o diálogo e retorna o DTO criado
   }
 }
