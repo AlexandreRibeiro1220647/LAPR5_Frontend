@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Search Patient</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="patientForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Contact Information</mat-label>
+      <input matInput formControlName="contactInformation" placeholder="Enter contact information" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Gender</mat-label>
+      <input matInput formControlName="gender" placeholder="Enter gender" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Date Of Birth</mat-label>
+      <input matInput formControlName="dateOfBirth" placeholder="Enter date of birth" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Search</button>
+</mat-dialog-actions>

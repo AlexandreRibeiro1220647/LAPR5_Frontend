@@ -31,7 +31,7 @@ import {
 import {SearchOperationRequestDTO} from '../../models/operation-requests/searchOperationRequestsDTO';
 import { OperationTypesService } from '../../services/operation-types/operation-types.service';
 import { OperationType } from '../../models/operation-types/operationType';
-import { Patient } from '../../models/patients/patient';
+import { Patient } from '../../models/patient/patient';
 import { Staff } from '../../models/staff/staff';
 
 

@@ -6,7 +6,7 @@ import {OperationRequest} from '../../models/operation-requests/operationRequest
 import {UpdateOperationRequestDTO} from '../../models/operation-requests/updateOperationRequestDTO';
 import {SearchOperationRequestDTO} from '../../models/operation-requests/searchOperationRequestsDTO';
 import { OperationType } from '../../models/operation-types/operationType';
-import { Patient } from '../../models/patients/patient';
+import { Patient } from '../../models/patient/patient';
 import { Staff } from '../../models/staff/staff';
 
 @Injectable({

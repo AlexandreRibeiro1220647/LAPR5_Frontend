@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Edit Patient</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="patientForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Patient Full Name</mat-label>
+      <input matInput formControlName="fullName" placeholder="Enter patient full name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Contact Information</mat-label>
+      <input matInput formControlName="contactInformation" placeholder="Enter contact information" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Medical Conditions</mat-label>
+      <input matInput formControlName="medicalConditions" placeholder="Enter medical conditions" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Emergency Contact</mat-label>
+      <input matInput formControlName="emergencyContact" placeholder="Enter emergency contact" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Edit</button>
+</mat-dialog-actions>

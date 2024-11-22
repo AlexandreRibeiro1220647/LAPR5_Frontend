@@ -9,7 +9,7 @@ import {CreateOperationRequestDTO} from '../../../../models/operation-requests/c
 import { CommonModule } from '@angular/common';
 import { OperationType } from '../../../../models/operation-types/operationType';
 import { OperationRequestService } from '../../../../services/operation-requests/operation-requests.service';
-import { Patient } from '../../../../models/patients/patient';
+import { Patient } from '../../../../models/patient/patient';
 import { Staff } from '../../../../models/staff/staff';
 
 @Component({

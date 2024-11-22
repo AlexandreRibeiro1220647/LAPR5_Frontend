@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
-import { PatientService } from '../../services/patient/patient.service';
+import { PatientService } from '../../../services/patient/patient.service';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -13,23 +13,24 @@ import {MatSort, MatSortHeader, Sort} from '@angular/material/sort';
 import {MatButton} from '@angular/material/button';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatInput} from '@angular/material/input';
+import {PatientDialogComponent} from '../../dialog/patient/create/patient-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {CreatePatientDTO} from '../../models/patient/createPatientDTO';
+import {CreatePatientDTO} from '../../../models/patient/createPatientDTO';
+import {Patient} from '../../../models/patient/patient';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
-import {UpdatePatientDTO} from '../../models/patient/updatePatientDTO';
+import {PatientDialogEditComponent} from '../../dialog/patient/edit/patient-dialog-edit.component';
+import {UpdatePatientDTO} from '../../../models/patient/updatePatientDTO';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import { PatientDialogComponent } from '../dialog/patient/create/patient-dialog.component';
-import { PatientDialogEditComponent } from '../dialog/patient/edit/patient-dialog-edit.component';
-import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
-import { PatientSearchDialogComponent } from '../dialog/patient/search/patient-search-dialog.component';
-import {SearchPatientDTO} from '../../models/patient/searchPatientDTO';
-import { Patient } from '../../models/patient/patient';
+import {
+  PatientSearchDialogComponent
+} from '../../dialog/patient/search/patient-search-dialog.component';
+import {SearchPatientDTO} from '../../../models/patient/searchPatientDTO';
 
 @Component({
-  selector: 'app-patient',
+  selector: 'app-admin',
   standalone: true,
+  templateUrl: './patient.component.html',
   imports: [
     MatTable,
     MatColumnDef,
@@ -49,16 +50,14 @@ import { Patient } from '../../models/patient/patient';
     MatInput,
     MatFormFieldModule,
     MatCheckbox,
-    MatSortHeader,
-    MatSelectModule
+    MatSortHeader
   ],
-  templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
 
-  displayedColumns: string[] = [ 'fullName', 'contactInformation', 'email', 'medicalConditions', 'emergencyContact', 'appointmentHistory'];
+  displayedColumns: string[] = ['contactInformation', 'gender', 'dateOfBirht'];
   dataSource: MatTableDataSource<Patient>;
   selection = new SelectionModel<Patient>(false, []); // Single selection
 
@@ -69,11 +68,8 @@ export class PatientComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Patient>([]);
   }
 
-  patients: Patient[] = []; 
-
-
   ngOnInit() {
-    this.loadPatients(); 
+    this.loadPatient();
   }
 
   ngAfterViewInit() {
@@ -81,10 +77,10 @@ export class PatientComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  loadPatients(): void {
+  loadPatient() {
     this.patientService.getItems().subscribe(
       (data: Patient[]) => {
-        this.patients = data;
+        this.dataSource.data = data;
       },
       (error) => {
         console.error('Error fetching patient', error);
@@ -92,36 +88,25 @@ export class PatientComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getPatientName(patientId: string): string {
-    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
-    return patient ? patient.user.name : 'Unknown';
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(PatientDialogComponent, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe((result: CreatePatientDTO | undefined) => {
+      if (result) {
+        // Handle the result data here, e.g., add it to your data array
+        this.patientService.createItem(result).subscribe({
+          next: (response) => {
+            console.log('Patient created successfully:', response);
+          },
+          error: (error) => {
+            console.error('Error creating patient:', error);
+          }
+        });
+        console.log('Patient Data:', result);
+      }
+    });
   }
-
-  getPatientContactInformation(patientId: string): string {
-    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
-    return patient ? patient.contactInformation : 'Unknown';
-  }
-
-  getPatientEmail(patientId: string): string {
-    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
-    return patient ? patient.user.email.value : 'Unknown';
-  }
-
-  getPatientMedicalConditions(patientId: string): string {
-    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
-    return patient ? patient.medicalConditions.toString() : 'Unknown';
-  }
-
-  getPatientEmergencyContact(patientId: string): string {
-    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
-    return patient ? patient.emergencyContact : 'Unknown';
-  }
-
-  getPatientAppointmentHistory(patientId: string): string {
-    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
-    return patient ? patient.appointmentHistory.toString() : 'Unknown';
-  }
-
 
   openEditDialog(): void {
     const dialogRef = this.dialog.open(PatientDialogEditComponent, {
@@ -143,14 +128,14 @@ export class PatientComponent implements OnInit, AfterViewInit {
 
           this.patientService.updateItem(row.medicalRecordNumber, cleanedData).subscribe({
             next: (response) => {
-              console.log('Patient updated successfully:', response);
+              console.log('Patient created successfully:', response);
             },
             error: (error) => {
-              console.error('Error updating patient:', error);
+              console.error('Error creating patient:', error);
             }
           });
         });
-        console.log('Patient Data:', result);
+        console.log('Patient Type Data:', result);
       }
     });
   }
@@ -176,10 +161,6 @@ export class PatientComponent implements OnInit, AfterViewInit {
     return cleanedData;
   }
 
-  toggleSelection(row: Patient) {
-    this.selection.toggle(row);
-  }
-
   // Backend call with selected row data
   deletePatientRequest() {
     const selectedData = this.selection.selected[0]; // Get the selected row
@@ -193,6 +174,11 @@ export class PatientComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Toggle selection for a single row when clicked
+  toggleSelection(row: Patient) {
+    this.selection.toggle(row);
+  }
+
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     // This example uses English messages. If your application supports
@@ -204,5 +190,26 @@ export class PatientComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(PatientSearchDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: SearchPatientDTO | undefined) => {
+      if (result) {
+        // Handle the result data here, e.g., add it to your data array
+        this.patientService.searchItems(result).subscribe({
+          next: (response) => {
+            this.dataSource.data = response;
+          },
+          error: (error) => {
+            console.error('Error filtering patient data:', error);
+          }
+        });
+        console.log('Patient Data:', result);
+      }
+    });
   }
 }

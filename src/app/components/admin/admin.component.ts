@@ -24,6 +24,10 @@ export class AdminComponent {
     this.router.navigate(['admin/staff']); // alterem para o vosso (nome do metodo tbm)
   }
 
+  toPatient() {
+    this.router.navigate(['admin/patient']);
+  }
+
   toBlaBla2() {
     this.router.navigate(['under-dev']); // alterem para o vosso
   }

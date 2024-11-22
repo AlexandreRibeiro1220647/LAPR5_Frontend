@@ -5,10 +5,11 @@ import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button'
 import {CreatePatientDTO} from '../../../../models/patient/createPatientDTO';
+import {SearchPatientDTO} from '../../../../models/patient/searchPatientDTO';
 
 @Component({
-  selector: 'app-sign-up.component',
-  templateUrl: './sign-up-dialog.component.html',
+  selector: 'app-patient-dialog',
+  templateUrl: './patient-dialog.component.html',
   imports: [
     MatDialogActions,
     MatFormField,
@@ -21,12 +22,12 @@ import {CreatePatientDTO} from '../../../../models/patient/createPatientDTO';
   ],
   standalone: true
 })
-export class SignUpDialogComponent {
+export class PatientDialogComponent {
   patientForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<SignUpDialogComponent>
+    public dialogRef: MatDialogRef<PatientDialogComponent>
   ) {
     this.patientForm = this.fb.group({
       fullName: [''],
@@ -46,8 +47,7 @@ export class SignUpDialogComponent {
 
   onSubmit(): void {
     if (this.patientForm.valid) {
-      // Convert form data into an OperationType object
-      const operationData: CreatePatientDTO = {
+      const patientData: CreatePatientDTO = {
         fullName: this.patientForm.value.fullName,
         dateOfBirth: this.patientForm.value.dateOfBirth,
         gender: this.patientForm.value.gender,
@@ -57,7 +57,7 @@ export class SignUpDialogComponent {
         emergencyContact: this.patientForm.value.emergencyContact,
         appointmentHistory: this.patientForm.value.appointmentHistory.split(',').map((s: string) => s.trim()),
       };
-      this.dialogRef.close(operationData); // Send OperationType object back to main component
+      this.dialogRef.close(patientData);
     }
   }
 }

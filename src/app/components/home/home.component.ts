@@ -4,9 +4,9 @@ import {CommonModule, NgIf, NgOptimizedImage} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {LoginService} from '../../services/login/login.service';
 import {JWT_OPTIONS} from '@auth0/angular-jwt';
-import {PatientsService} from '../../services/patients/patients.service';
+import {PatientService} from '../../services/patient/patient.service';
 import {MatDialog} from '@angular/material/dialog';
-import {CreatePatientDTO} from '../../models/patients/createPatientDTO';
+import {CreatePatientDTO} from '../../models/patient/createPatientDTO';
 import {SignUpDialogComponent} from '../dialog/login/sign-up-dialog/sign-up-dialog.component';
 
 interface Token {
@@ -33,7 +33,7 @@ interface Token {
 export class HomeComponent implements OnInit{
   isLoggedIn: boolean = false;
 
-  constructor(private router: Router, private loginService: LoginService, private patientsService: PatientsService, public dialog: MatDialog) {
+  constructor(private router: Router, private loginService: LoginService, private patientService: PatientService, public dialog: MatDialog) {
   }
   ngOnInit() {
     this.isLoggedIn = this.loginService.isLoggedIn();
@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit{
 
                   // Now you can use the token, e.g., store it, or send it in headers for authenticated requests
                   if (token) {
-                    this.patientsService.createItem(result).subscribe({
+                    this.patientService.createItem(result).subscribe({
                       next: (response) => {
                         console.log('Patient created successfully:', response);
 
