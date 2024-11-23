@@ -75,7 +75,7 @@ export class StaffComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private operationRequestService: OperationRequestService, public dialog: MatDialog, private operationTypesService: OperationTypesService) {
+  constructor(private operationRequestService: OperationRequestService, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<OperationRequest>([]);
   }
 
