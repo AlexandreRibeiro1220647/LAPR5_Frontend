@@ -45,7 +45,7 @@ export class OperationTypesDialogEditComponent {
       const operationData: UpdateOperationTypeDTO = {
         name: this.operationForm.value.name,
         requiredStaffBySpecialization: this.operationForm.value.requiredStaffBySpecialization.split(',').map((s: string) => s.trim()),
-        estimatedDuration: this.operationForm.value.estimatedDuration,
+        estimatedDuration: this.operationForm.value.estimatedDuration.split(',').map((s: string) => s.trim()),
       };
       this.dialogRef.close(operationData); // Send OperationType object back to main component
     }

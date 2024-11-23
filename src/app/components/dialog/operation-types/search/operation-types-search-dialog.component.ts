@@ -47,7 +47,7 @@ export class OperationTypesSearchDialogComponent {
       const operationData: SearchOperationTypeDTO = {
         name: this.operationForm.value.name,
         requiredStaffBySpecialization: this.operationForm.value.requiredStaffBySpecialization.split(',').map((s: string) => s.trim()),
-        estimatedDuration: this.operationForm.value.estimatedDuration,
+        estimatedDuration: this.operationForm.value.estimatedDuration.split(',').map((s: string) => s.trim()),
         status: this.operationForm.value.status,
       };
       this.dialogRef.close(operationData); // Send OperationType object back to main component

@@ -53,8 +53,8 @@ export class OperationTypesService {
       params = params.set('specialization', filter.requiredStaffBySpecialization.toString());
     }
 
-    if (filter.estimatedDuration) {
-      params = params.set('estimatedDuration', filter.estimatedDuration);
+    if (filter.estimatedDuration && filter.estimatedDuration.length > 0 && filter.estimatedDuration[0] != "") {
+      params = params.set('estimatedDuration', filter.estimatedDuration.toString());
     }
 
     if (filter.status) {
