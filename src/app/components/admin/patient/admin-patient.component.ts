@@ -30,7 +30,7 @@ import {SearchPatientDTO} from '../../../models/patient/searchPatientDTO';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  templateUrl: './patient.component.html',
+  templateUrl: './admin-patient.component.html',
   imports: [
     MatTable,
     MatColumnDef,
@@ -52,12 +52,12 @@ import {SearchPatientDTO} from '../../../models/patient/searchPatientDTO';
     MatCheckbox,
     MatSortHeader
   ],
-  styleUrls: ['./patient.component.css']
+  styleUrls: ['./admin-patient.component.css']
 })
-export class PatientComponent implements OnInit, AfterViewInit {
+export class AdminPatientComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
 
-  displayedColumns: string[] = ['contactInformation', 'gender', 'dateOfBirht'];
+  displayedColumns: string[] = [ 'fullName', 'contactInformation', 'email', 'medicalConditions', 'emergencyContact', 'appointmentHistory'];
   dataSource: MatTableDataSource<Patient>;
   selection = new SelectionModel<Patient>(false, []); // Single selection
 
@@ -67,6 +67,8 @@ export class PatientComponent implements OnInit, AfterViewInit {
   constructor(private patientService: PatientService, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<Patient>([]);
   }
+
+  patients: Patient[] = []; 
 
   ngOnInit() {
     this.loadPatient();
@@ -86,6 +88,36 @@ export class PatientComponent implements OnInit, AfterViewInit {
         console.error('Error fetching patient', error);
       }
     );
+  }
+
+  getPatientName(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.user.name : 'Unknown';
+  }
+
+  getPatientContactInformation(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.contactInformation : 'Unknown';
+  }
+
+  getPatientEmail(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.user.email.value : 'Unknown';
+  }
+
+  getPatientMedicalConditions(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.medicalConditions.toString() : 'Unknown';
+  }
+
+  getPatientEmergencyContact(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.emergencyContact : 'Unknown';
+  }
+
+  getPatientAppointmentHistory(patientId: string): string {
+    const patient = this.patients.find(p => p.medicalRecordNumber === patientId);
+    return patient ? patient.appointmentHistory.toString() : 'Unknown';
   }
 
   openCreateDialog(): void {
@@ -128,14 +160,14 @@ export class PatientComponent implements OnInit, AfterViewInit {
 
           this.patientService.updateItem(row.medicalRecordNumber, cleanedData).subscribe({
             next: (response) => {
-              console.log('Patient created successfully:', response);
+              console.log('Patient info updated successfully:', response);
             },
             error: (error) => {
-              console.error('Error creating patient:', error);
+              console.error('Error updating patient:', error);
             }
           });
         });
-        console.log('Patient Type Data:', result);
+        console.log('Patient Data:', result);
       }
     });
   }
