@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {CreatePatientDTO} from '../../models/patient/createPatientDTO';
 
 interface Token {
   accessToken: string;
@@ -107,5 +108,23 @@ export class LoginService {
 
   signup(): Observable<any> {
     return this.http.post(`${this.apiUrl}/Patients/signup`, {});
+  }
+
+  createItem(patient: CreatePatientDTO): Observable<CreatePatientDTO> {
+    const headers = this.getAuthHeaders(this.getTokenFromStorage());
+    return this.http.post<CreatePatientDTO>(`${this.apiUrl}/Patients/register/patient`, patient, { headers });
+  }
+
+  private getAuthHeaders(token: string): HttpHeaders {
+    console.log("Header token:", token);
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
+  getTokenFromStorage(): any {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem("access_token");
+    }
   }
 }
