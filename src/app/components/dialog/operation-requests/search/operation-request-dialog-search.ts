@@ -33,7 +33,7 @@ export class OperationRequestSearchDialogComponent {
     this.operationForm = this.fb.group({
       patientName: [''],
       patientId: [''],
-      operationTypeId: [''],
+      operationTypeName: [''],
       priority: [''],
       deadline: ['']
     });
@@ -49,7 +49,7 @@ export class OperationRequestSearchDialogComponent {
       const operationData: SearchOperationRequestDTO = {
         patientName: this.operationForm.value.patientName,
         patientId: this.operationForm.value.patientId,
-        operationTypeId: this.operationForm.value.operationTypeId,
+        operationTypeName: this.operationForm.value.operationTypeName,
         priority: this.operationForm.value.priority,
         deadline: this.operationForm.value.deadline,
       };

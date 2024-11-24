@@ -58,8 +58,8 @@ export class OperationRequestService {
       params = params.set('patientId', filter.patientId);
     }
 
-    if (filter.operationTypeId) {
-      params = params.set('operationTypeId', filter.operationTypeId);
+    if (filter.operationTypeName) {
+      params = params.set('operationTypeName', filter.operationTypeName);
     }
 
     if (filter.priority) {
