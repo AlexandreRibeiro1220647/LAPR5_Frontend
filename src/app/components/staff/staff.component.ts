@@ -137,7 +137,7 @@ export class StaffComponent implements OnInit, AfterViewInit {
         this.staffs = data;
       },
       (error) => {
-        console.error('Error fetching patients', error);
+        console.error('Error fetching staff', error);
       }
     );
   }
