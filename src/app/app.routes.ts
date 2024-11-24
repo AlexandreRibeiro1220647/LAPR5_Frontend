@@ -10,7 +10,6 @@ import {StaffComponente} from './components/admin/staff/staff.component';
 import {
   OperationRoomSchedulesComponent
 } from './components/admin/operation-room-schedules/operation-room-schedules.component';
-import {ThreeDComponent} from './components/three-d/three-d.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
