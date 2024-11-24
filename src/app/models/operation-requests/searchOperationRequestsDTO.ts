@@ -1,7 +1,7 @@
 export interface SearchOperationRequestDTO {
     patientName?: string;
     patientId?: string;
-    operationTypeId?: string;
+    operationTypeName?: string;
     priority?: string;
     deadline?: string
   }
