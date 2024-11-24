@@ -103,14 +103,16 @@ export class HomeComponent implements OnInit{
 
                   // Now you can use the token, e.g., store it, or send it in headers for authenticated requests
                   if (token) {
-                    this.patientService.createItem(result).subscribe({
+
+                    sessionStorage.setItem("access_token", token.accessToken);
+                    sessionStorage.setItem("session_id", sessionId);
+
+                    console.log(token);
+
+                    this.loginService.createItem(result).subscribe({
                       next: (response) => {
                         console.log('Patient created successfully:', response);
 
-                        sessionStorage.setItem("access_token", token.accessToken);
-                        sessionStorage.setItem("session_id", sessionId);
-
-                        console.log(token);
                         // Check the role from the token (or API call to fetch the role)
                         const role = this.loginService.getRolesFromToken(token.accessToken); // Extract the role from decoded token
                         console.log("role", role);

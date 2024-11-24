@@ -1,6 +1,6 @@
 export interface CreatePatientDTO {
   fullName: string;
-  dateOfBirth: string[];
+  dateOfBirth: string;
   gender: string;
   contactInformation: string;
   email: string;
