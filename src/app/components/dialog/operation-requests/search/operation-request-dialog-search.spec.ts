@@ -44,7 +44,7 @@ describe('OperationRequestSearchDialogComponent', () => {
     expect(formValue).toEqual({
       patientName: '',
       patientId: '',
-      operationTypeId: '',
+      operationTypeName: '',
       priority: '',
       deadline: ''
     });
@@ -59,7 +59,7 @@ describe('OperationRequestSearchDialogComponent', () => {
     const data = {
       patientName: '',
       patientId: '12345',
-      operationTypeId: '10',
+      operationTypeName: '10',
       priority: 'Urgent',
       deadline: ''
     };
@@ -72,7 +72,7 @@ describe('OperationRequestSearchDialogComponent', () => {
     const validData = {
       patientName: 'Jane Doe',
       patientId: '12345',
-      operationTypeId: '10',
+      operationTypeName: '10',
       priority: 'Urgent',
       deadline: '2024-12-31'
     };
