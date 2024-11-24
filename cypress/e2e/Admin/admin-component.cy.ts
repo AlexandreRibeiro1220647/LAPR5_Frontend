@@ -1,12 +1,11 @@
 describe('AdminComponent E2E Tests', () => {
   beforeEach(() => {
-    // Visit the admin component route before each test
     cy.visit('/admin');
   });
 
   it('should navigate to Operation Type page when "Operation Type" button is clicked', () => {
-    cy.get('.vertical-buttons button').eq(0).click(); // Adjust button text if necessary
-    cy.url().should('include', '/admin/operation-type'); // Assert the URL contains the expected route
+    cy.get('.vertical-buttons button').eq(0).click();
+    cy.url().should('include', '/admin/operation-type');
   });
 
   it('should navigate to Staff page when "Staff" button is clicked', () => {
