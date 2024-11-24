@@ -11,7 +11,7 @@ import {RouterOutlet} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'LAPR5_Frontend';
+  title = 'SNS 27';
   data: any;
 
   constructor() {}
