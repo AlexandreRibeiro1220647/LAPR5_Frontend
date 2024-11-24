@@ -24,8 +24,7 @@ export const routes: Routes = [
       { path: 'staff', component: StaffComponente}, // alterem para o vosso
       { path: 'patient', component: AdminPatientComponent }, // alterem para o vosso
       { path: 'operationRoomSchedule', component: OperationRoomSchedulesComponent },
-        
-      { path: 'operation-type', redirectTo: '', pathMatch: 'full' }, // Default child route
+      { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
   { path: '', component: HomeComponent },
