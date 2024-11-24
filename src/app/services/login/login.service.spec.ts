@@ -9,7 +9,7 @@ describe('LoginService', () => {
   let httpMock: HttpTestingController;
   let mockJwtHelper: jasmine.SpyObj<JwtHelperService>;
 
-  const mockApiUrl = 'http://localhost:5012';  // Ensure this matches the actual API URL used
+  const mockApiUrl = 'http://localhost:5012';
 
   beforeEach(() => {
     mockJwtHelper = jasmine.createSpyObj('JwtHelperService', ['decodeToken']);
@@ -29,7 +29,7 @@ describe('LoginService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify();  // Ensure no open HTTP requests
+    httpMock.verify();
   });
 
   it('should return true if the user is logged in', () => {
@@ -39,22 +39,21 @@ describe('LoginService', () => {
 
   it('should decode a token and return decoded data', () => {
     const mockDecodedToken = { roles: ['Admin'] };
-    mockJwtHelper.decodeToken.and.returnValue(mockDecodedToken);  // Mock the return value
+    mockJwtHelper.decodeToken.and.returnValue(mockDecodedToken);
 
     const token = 'mock-token';
-    const result = service.decodeToken(token);  // Call the service method that uses decodeToken
+    const result = service.decodeToken(token);
 
-    expect(mockDecodedToken).toEqual(mockDecodedToken);  // Ensure the decoded token is returned correctly
+    expect(mockDecodedToken).toEqual(mockDecodedToken);
   });
 
   it('should return roles from the token', () => {
-    // Mock the decoded token
     const mockDecodedToken = { 'https://hellth.com/claims/roles': ['Admin', 'User'] };
-    mockJwtHelper.decodeToken.and.returnValue(mockDecodedToken);  // Mock decodeToken to return the expected roles
+    mockJwtHelper.decodeToken.and.returnValue(mockDecodedToken);
 
-    const token = 'mock-token';  // Simulate a token string
-    const roles = service.getRolesFromToken(token);  // Call the method to get roles from the token
+    const token = 'mock-token';
+    const roles = service.getRolesFromToken(token);
 
-    expect(['Admin', 'User']).toEqual(['Admin', 'User']);  // Verify the roles returned by the method
+    expect(['Admin', 'User']).toEqual(['Admin', 'User']);
   });
 });

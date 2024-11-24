@@ -13,7 +13,6 @@ describe('OperationTypesService', () => {
   const mockToken = 'mock-token';
 
   beforeEach(() => {
-    // Mock sessionStorage to return the mock token
     spyOn(sessionStorage, 'getItem').and.returnValue(mockToken);
 
     TestBed.configureTestingModule({

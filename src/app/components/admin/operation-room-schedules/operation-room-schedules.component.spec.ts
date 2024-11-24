@@ -40,7 +40,7 @@ describe('OperationRoomSchedulesComponent', () => {
         OperationRoomSchedulesComponent,
         MatButton
       ],
-      schemas: [NO_ERRORS_SCHEMA], // To ignore unrecognized elements in the templates (like Material components)
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(OperationRoomSchedulesComponent);
@@ -58,13 +58,13 @@ describe('OperationRoomSchedulesComponent', () => {
     const start = '1200';
     const finish = '1300';
     const slotWidth = component.calculateSlotWidth(start, finish);
-    expect(slotWidth).toBe(6.944444444444445); // (100/1440) * (1300 - 1200) = 6.944
+    expect(slotWidth).toBe(6.944444444444445);
   });
 
   it('should calculate the correct slot position', () => {
     const start = '1200';
     const slotPosition = component.calculateSlotPosition(start);
-    expect(slotPosition).toBe(83.33333333333334); // (100/1440) * 1200 = 83.333
+    expect(slotPosition).toBe(83.33333333333334);
   });
 
   it('should format the time correctly', () => {

@@ -12,36 +12,36 @@ describe('AppComponent', () => {
       imports: [
         AppComponent,
         RouterTestingModule
-      ],  // Use RouterTestingModule for routing-related tests
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();  // Detect changes to initialize the component
+    fixture.detectChanges();
   });
 
   it('should create the app component', () => {
-    expect(component).toBeTruthy();  // Check if the component instance is created
+    expect(component).toBeTruthy();
   });
 
   it('should have the title "SNS 27"', () => {
-    expect(component.title).toBe('SNS 27');  // Verify that the title is set correctly
+    expect(component.title).toBe('SNS 27');
   });
 
   it('should have an empty data object initially', () => {
-    expect(component.data).toBeUndefined();  // Since `data` is not initialized, expect it to be undefined
+    expect(component.data).toBeUndefined();
   });
 
   it('should initialize with the correct title', () => {
-    component.ngOnInit();  // Call ngOnInit explicitly (although it's empty here)
-    expect(component.title).toBe('SNS 27');  // Ensure that title is correctly set
+    component.ngOnInit();
+    expect(component.title).toBe('SNS 27');
   });
 
   it('should render the title in the template', () => {
-    fixture.detectChanges();  // Trigger change detection to update the DOM
-    const compiled = fixture.nativeElement as HTMLElement;  // Access the DOM element
-    expect(compiled.querySelector('h1')?.textContent).toContain('SNS 27');  // Verify the title in the DOM
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('SNS 27');
   });
 });

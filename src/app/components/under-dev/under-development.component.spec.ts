@@ -14,16 +14,16 @@ describe('UnderDevelopmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UnderDevelopmentComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();  // Trigger change detection
+    fixture.detectChanges();
   });
 
   it('should create the UnderDevelopment component', () => {
-    expect(component).toBeTruthy();  // Ensure the component is created successfully
+    expect(component).toBeTruthy();
   });
 
   it('should render the correct message in the template', () => {
-    fixture.detectChanges();  // Trigger change detection to ensure the DOM is updated
+    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Under Development'); // Modify this based on actual template text
+    expect(compiled.querySelector('h1')?.textContent).toContain('Under Development');
   });
 });

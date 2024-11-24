@@ -39,14 +39,14 @@ describe('OperationRoomSchedulesDialogComponent', () => {
   it('should submit valid form data as OpScheduleParametersDTO', () => {
     component.operationForm.setValue({
       opRoomId: '123',
-      date: '1680998400000', // Example timestamp as string
+      date: '1680998400000',
     });
 
     component.onSubmit();
 
     const expectedData: OpScheduleParametersDTO = {
       opRoomId: '123',
-      date: 1680998400000, // Converted to number
+      date: 1680998400000,
     };
 
     expect(dialogRefSpy.close).toHaveBeenCalledWith(expectedData);

@@ -9,7 +9,6 @@ describe('OperationTypesDialogComponent', () => {
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<OperationTypesDialogComponent>>;
 
   beforeEach(() => {
-    // Mock do MatDialogRef
     const dialogRefMock = jasmine.createSpyObj('MatDialogRef', ['close']);
 
     TestBed.configureTestingModule({
@@ -19,7 +18,6 @@ describe('OperationTypesDialogComponent', () => {
       ],
     });
 
-    // Criar uma instância do componente
     const fb = TestBed.inject(FormBuilder);
     dialogRefSpy = TestBed.inject(MatDialogRef) as jasmine.SpyObj<MatDialogRef<OperationTypesDialogComponent>>;
     component = new OperationTypesDialogComponent(fb, dialogRefSpy);
@@ -40,7 +38,6 @@ describe('OperationTypesDialogComponent', () => {
   });
 
   it('deve enviar os dados convertidos ao submeter formulário válido', () => {
-    // Configurar valores válidos no formulário
     component.operationForm.setValue({
       name: 'Operation A',
       requiredStaffBySpecialization: 'Doctor, Nurse',

@@ -11,7 +11,6 @@ describe('AdminComponent', () => {
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    // Create a mock Router with Jasmine's spyOn method
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
@@ -21,7 +20,7 @@ describe('AdminComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: Router, useValue: mockRouter }, // Provide the mocked router
+        { provide: Router, useValue: mockRouter },
       ],
     }).compileComponents();
 
@@ -55,7 +54,6 @@ describe('AdminComponent', () => {
   });
 
   it('should call the navigate method when a button is clicked', () => {
-    // Spy on the navigate method
     spyOn(component, 'toOperationType');
     const button = fixture.nativeElement.querySelector('button');
     button.click();

@@ -31,7 +31,7 @@ describe('OperationTypeComponent', () => {
       'searchItems',
     ]);
 
-    operationTypesServiceMock.getItems.and.returnValue(of([])); // Mock observable return
+    operationTypesServiceMock.getItems.and.returnValue(of([]));
     operationTypesServiceMock.createItem.and.returnValue(of({}));
     operationTypesServiceMock.updateItem.and.returnValue(of({}));
     operationTypesServiceMock.deleteItem.and.returnValue(of({}));
@@ -48,7 +48,7 @@ describe('OperationTypeComponent', () => {
         MatCheckboxModule,
         MatButtonModule,
         MatInputModule,
-        BrowserAnimationsModule, // Add this line to enable animations
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: OperationTypesService, useValue: operationTypesServiceMock },
@@ -120,7 +120,7 @@ describe('OperationTypeComponent', () => {
     const dialogRefMock = { afterClosed: () => of(mockUpdateData) } as MatDialogRef<any>;
 
     dialogSpy.open.and.returnValue(dialogRefMock);
-    component.selection.select(mockSelectedRow); // Simulate row selection
+    component.selection.select(mockSelectedRow);
     operationTypesServiceSpy.updateItem.and.returnValue(of({}));
 
     component.openEditDialog();
@@ -161,7 +161,7 @@ describe('OperationTypeComponent', () => {
       name: 'Search',
       requiredStaffBySpecialization: [],
       estimatedDuration: [],
-      status: true, // Use a boolean value here if that's the expected type
+      status: true,
     };
     const mockFilteredData: OperationType[] = [
       { operationTypeId: "1", name: 'Type 1', requiredStaffBySpecialization: [], estimatedDuration: [], isActive: true },
