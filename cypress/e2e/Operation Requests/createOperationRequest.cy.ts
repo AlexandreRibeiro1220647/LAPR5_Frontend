@@ -43,9 +43,9 @@ describe('Create Operation Request', () => {
         cy.get('button.create-button', { timeout: 10000 }).should('be.visible').click();
     
         // Preencher o formulário com dados válidos
-        const patientEmail = 'joaopaulo123@gmail.com';
-        const doctorEmail = 'alexandre@gmail.com';
-        const operationType = 'Knee Replacement';
+        const patientEmail = 'user90@example.com';
+        const doctorEmail = 'sofia44@this.app';
+        const operationType = 'Trigger finger';
         const deadline = '2024-12-31';
         const priority = 'Urgent';
     
@@ -60,19 +60,21 @@ describe('Create Operation Request', () => {
         cy.get('mat-dialog-container').within(() => {
           cy.contains('button', 'Create').click({ force: true });
         });
-    
+        
+        cy.wait(5000);
+
         cy.reload();
 
         cy.get('table.mat-table tbody tr', { timeout: 10000 }).should('have.length.greaterThan', 0);
         cy.get('table.mat-table tbody tr').first().within(() => {
-          cy.contains("João Paulo");
-          cy.contains("Alexandre Ribeiro");
+          cy.contains("André Silva");
+          cy.contains("Sofia Oliveira");
           cy.contains(operationType);
           cy.contains(priority.toUpperCase());
           cy.contains("31/12/2024");
           
         });
-      
+    
   });
 })
   
