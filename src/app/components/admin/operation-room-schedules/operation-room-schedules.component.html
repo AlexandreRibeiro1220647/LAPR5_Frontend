@@ -18,28 +18,28 @@
     </div>
   </div>
 </div>
-<div *ngIf="lagDoctorsBetter.length > 0">
-  <div *ngFor="let doctor of lagDoctorsBetter" class="doctor-timeline">
+<section *ngIf="doctors_agenda_better.length > 0" aria-label="Doctors' schedules">
+  <article *ngFor="let doctor of doctors_agenda_better" class="doctor-timeline" aria-label="Doctor timeline">
     <!-- Doctor ID -->
-    <div class="doctorId">
-      <strong>{{ doctor[0] }}</strong> <!-- Doctor ID -->
-    </div>
+    <header class="doctorId">
+      <strong>{{ doctor.doctor }}</strong> <!-- Doctor ID -->
+    </header>
     <!-- Timeline -->
-    <div class="timeline">
-      <div *ngFor="let slot of doctor[1]" class="timeline-slot"
-           [style.width]="calculateSlotWidth(slot[0], slot[1]) + '%'"
-           [style.left]="calculateSlotPosition(slot[0]) + '%'"
-           [style.background-color]="'rgb(67, 76, 63, 0.6)'">
+    <ul class="timeline">
+      <li *ngFor="let slot of doctor.schedule" class="timeline-slot"
+          [style.width]="calculateSlotWidth(slot.start_time, slot.end_time) + '%'"
+          [style.left]="calculateSlotPosition(slot.start_time) + '%'"
+          [style.background-color]="'rgba(67, 76, 63, 0.6)'">
         <div class="slot-time">
-          <span>{{ formatTime(slot[0]) }} - {{ formatTime(slot[1]) }}</span>
+          <span>{{ formatTime(slot.start_time) }} - {{ formatTime(slot.end_time) }}</span>
         </div>
         <div class="slot-details">
-          <span>{{ slot[2] }}</span>
+          <span>{{ slot.surgery_id }}</span>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </li>
+    </ul>
+  </article>
+</section>
 
 <div class="button-container">
   <button mat-flat-button (click)="openDialog()" class="dialog-button">Search</button>

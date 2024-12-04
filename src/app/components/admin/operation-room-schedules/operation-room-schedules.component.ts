@@ -22,7 +22,7 @@ import {MatButton} from '@angular/material/button';  // Import Timeline from vis
 })
 export class OperationRoomSchedulesComponent implements OnInit{
   agOpRoomBetter: string[][] = [];  // Holds the slots
-  lagDoctorsBetter: string[][][] = []; // Holds the doctor schedules
+  doctors_agenda_better: { doctor: string, schedule: { start_time: string, end_time: string, surgery_id: string }[] }[] = []; // Holds the doctor schedules
   totalDayMinutes = 1440;  // Total minutes in a day
   opRoomId: string = "";
 
@@ -67,9 +67,9 @@ export class OperationRoomSchedulesComponent implements OnInit{
           next: (data) => {
             this.opRoomId = result.opRoomId;
             this.agOpRoomBetter = data.ag_op_room_better;
-            this.lagDoctorsBetter = data.lag_doctors_better;
+            this.doctors_agenda_better = data.doctors_agenda_better;
             console.log('Fetched operation room schedule:', this.agOpRoomBetter); // Debugging
-            console.log('Fetched doctor schedules:', this.lagDoctorsBetter); // Debugging
+            console.log('Fetched doctor schedules:', this.doctors_agenda_better); // Debugging
           },
           error: (error) => {
             console.error('Error fetching operation room schedule:', error);
