@@ -10,11 +10,13 @@ import {StaffComponente} from './components/admin/staff/staff.component';
 import {
   OperationRoomSchedulesComponent
 } from './components/admin/operation-room-schedules/operation-room-schedules.component';
+import { ThreeSceneComponent } from './components/three-scene/three-scene.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
   { path: 'staff', component: StaffComponent },
   { path: 'patient', component: PatientComponent },
+  { path: 'three-scene', component: ThreeSceneComponent },
   {
     path: 'admin',
     component: AdminComponent,
