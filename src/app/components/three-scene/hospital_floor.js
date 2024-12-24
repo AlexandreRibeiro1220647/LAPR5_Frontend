@@ -10,7 +10,7 @@
 // User interaction
 
 import * as THREE from "three";
-import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Orientation from "./orientation.js";
 import { generalData, floormapData, lightsData, cameraData } from "./default_data.js";
 import { merge } from "./merge.js";
@@ -42,7 +42,10 @@ export default class HospitalFloor {
         // Create a 3D scene (the game itself)
         this.scene3D = new THREE.Scene();
 
+        this.raycaster = new THREE.Raycaster();
+
         // Create and add the hospital beds
+        this.beds = []
         const loader = new GLTFLoader();
         loader.load(
             "./models/gltf/Hospital_Bed/hospital_bed.glb",
@@ -57,10 +60,100 @@ export default class HospitalFloor {
                         clone.castShadow = true;
                         clone.receiveShadow = true;
                         this.scene3D.add(clone);
+                        this.beds.push(clone);
                     }
                 }
+            },
+            undefined,
+            (error) => {
+                console.error("Failed to load the model:", error);
             }
         );
+
+        this.bedcubes = []
+
+        let geometrycube = new THREE.BoxGeometry(0.42, 0.35, 0.85);
+        const materialcube = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 });
+
+        this.cube1 = new THREE.Mesh(geometrycube, materialcube);
+        this.cube1.position.x = -2.96;
+        this.cube1.position.y = 0.18;
+        this.cube1.position.z = 3.025;
+        this.scene3D.add(this.cube1);
+        this.bedcubes.push(this.cube1);
+        const edges1 = new THREE.EdgesGeometry( geometrycube );
+        this.line1 = new THREE.LineSegments(edges1, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+        this.line1.position.x = -2.96;
+        this.line1.position.y = 0.18;
+        this.line1.position.z = 3.025;
+        this.scene3D.add(this.line1);
+        
+        this.cube2 = new THREE.Mesh(geometrycube, materialcube);
+        this.cube2.position.x = -2.96;
+        this.cube2.position.y = 0.18;
+        this.cube2.position.z = 0.04;
+        this.scene3D.add(this.cube2);
+        this.bedcubes.push(this.cube2);
+        const edges2 = new THREE.EdgesGeometry( geometrycube );
+        this.line2 = new THREE.LineSegments(edges2, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+        this.line2.position.x = -2.96;
+        this.line2.position.y = 0.18;
+        this.line2.position.z = 0.04;
+        this.scene3D.add(this.line2);
+
+        this.cube3 = new THREE.Mesh(geometrycube, materialcube);
+        this.cube3.position.x = -2.96;
+        this.cube3.position.y = 0.18;
+        this.cube3.position.z = -2.94;
+        this.scene3D.add(this.cube3);
+        this.bedcubes.push(this.cube3);
+        const edges3 = new THREE.EdgesGeometry( geometrycube );
+        this.line3 = new THREE.LineSegments(edges3, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+        this.line3.position.x = -2.96;
+        this.line3.position.y = 0.18;
+        this.line3.position.z = -2.94;
+        this.scene3D.add(this.line3);
+
+        this.cube4 = new THREE.Mesh(geometrycube, materialcube);
+        this.cube4.position.x = 2.975;
+        this.cube4.position.y = 0.18;
+        this.cube4.position.z = 3.025;
+        this.scene3D.add(this.cube4);
+        this.bedcubes.push(this.cube4);
+        const edges4 = new THREE.EdgesGeometry( geometrycube );
+        this.line4 = new THREE.LineSegments(edges4, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+        this.line4.position.x = 2.975;
+        this.line4.position.y = 0.18;
+        this.line4.position.z = 3.025;
+        this.scene3D.add(this.line4);
+
+        this.cube5 = new THREE.Mesh(geometrycube, materialcube);
+        this.cube5.position.x = 2.975;
+        this.cube5.position.y = 0.18;
+        this.cube5.position.z = 0.04;
+        this.scene3D.add(this.cube5);
+        this.bedcubes.push(this.cube5);
+        const edges5 = new THREE.EdgesGeometry( geometrycube );
+        this.line5 = new THREE.LineSegments(edges5, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+        this.line5.position.x = 2.975;
+        this.line5.position.y = 0.18;
+        this.line5.position.z = 0.04;
+        this.scene3D.add(this.line5);
+
+        this.cube6 = new THREE.Mesh(geometrycube, materialcube);
+        this.cube6.position.x = 2.975;
+        this.cube6.position.y = 0.18;
+        this.cube6.position.z = -2.94;
+        this.scene3D.add(this.cube6);
+        this.bedcubes.push(this.cube6);
+        const edges6 = new THREE.EdgesGeometry( geometrycube );
+        this.line6 = new THREE.LineSegments(edges6, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+        this.line6.position.x = 2.975;
+        this.line6.position.y = 0.18;
+        this.line6.position.z = -2.94;
+        this.scene3D.add(this.line6);
+
+        //----------------------------------------------------------------
 
         // Create and add the hospital doors
         loader.load(
@@ -314,8 +407,49 @@ export default class HospitalFloor {
                 const cameraIndex = ["fixed", "top"].indexOf(cameraView);
                 this.view.options.selectedIndex = cameraIndex;
                 this.setActiveViewCamera([this.fixedViewCamera, this.topViewCamera][cameraIndex]);
+
                 if (event.buttons == 1) { // Primary button down
-                    this.changeCameraDistance = true;
+                    const pointer = new THREE.Vector2();
+                    pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+			        pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+                    let cameras;
+                    cameras = [this.activeViewCamera];
+                    for (const camera of cameras) {
+                        this.raycaster.setFromCamera(pointer, camera.object);
+                        const intersections = this.raycaster.intersectObjects(this.bedcubes, true); 
+
+                        if (intersections.length > 0) {
+                            const selectedObject = intersections[0].object;
+                            switch (selectedObject) {
+                                case this.bedcubes[0]:
+                                    camera.object.position.set(-4, 4, 4);
+                                    camera.object.lookAt(-2.96, 0.18, 3.025);
+                                    break;
+                                case this.bedcubes[1]:
+                                    camera.object.position.set(-4, 4, 1);
+                                    camera.object.lookAt(-2.96, 0.18, 0.04);
+                                    break;
+                                case this.bedcubes[2]:
+                                    camera.object.position.set(-4, 4, -2);
+                                    camera.object.lookAt(-2.96, 0.18, -2.94);
+                                    break;
+                                case this.bedcubes[3]:
+                                    camera.object.position.set(2, 4, 4);
+                                    camera.object.lookAt(2.975, 0.18, 3.025);
+                                    break;
+                                case this.bedcubes[4]:
+                                    camera.object.position.set(2, 4, 1);
+                                    camera.object.lookAt(2.975, 0.18, 0.04);
+                                    break;
+                                case this.bedcubes[5]:
+                                    camera.object.position.set(2, 4, -2);
+                                    camera.object.lookAt(2.975, 0.18, -2.94);
+                                    break;    
+                                default:
+                            }
+                        } 
+                    }
                 }
                 else { // Secondary button down
                     this.changeCameraOrientation = true;
@@ -326,6 +460,47 @@ export default class HospitalFloor {
     }
 
     mouseMove(event) {
+        const pointer = new THREE.Vector2();
+        pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+		pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        let cameras;
+        cameras = [this.activeViewCamera];
+        for (const camera of cameras) {
+            this.raycaster.setFromCamera(pointer, camera.object);
+            const intersections = this.raycaster.intersectObjects(this.bedcubes, true);
+            if (intersections.length > 0) {
+                const selectedObject = intersections[0].object;
+                switch (selectedObject) {
+                    case this.bedcubes[0]:
+                        this.line1.visible = true;
+                        break;
+                    case this.bedcubes[1]:
+                        this.line2.visible = true;
+                        break;
+                    case this.bedcubes[2]:
+                        this.line3.visible = true;
+                        break;
+                    case this.bedcubes[3]:
+                        this.line4.visible = true;
+                        break;
+                    case this.bedcubes[4]:
+                        this.line5.visible = true;
+                        break;
+                    case this.bedcubes[5]:
+                        this.line6.visible = true;
+                        break;    
+                    default:
+                }
+            } else {
+                this.line1.visible = false;
+                this.line2.visible = false;
+                this.line3.visible = false;
+                this.line4.visible = false;
+                this.line5.visible = false;
+                this.line6.visible = false;
+            }
+        }
+
         if (event.buttons == 1 || event.buttons == 2) { // Primary or secondary button down
             if (this.changeCameraDistance || this.changeCameraOrientation) { // Mouse action in progress
                 // Compute mouse movement and update mouse position
