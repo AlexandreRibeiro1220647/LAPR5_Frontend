@@ -19,6 +19,16 @@ import Lights from "./lights.js";
 import Camera from "./camera.js";
 
 export default class HospitalFloor {
+
+    setShadow(object) {
+        object.traverseVisible(function (child) {
+            if (child instanceof THREE.Object3D) {
+                child.castShadow = true;
+                child.receiveShadow = false;
+            }
+        });
+    }
+
     constructor(generalParameters, floormapParameters, lightsParameters, fixedViewCameraParameters, topViewCameraParameters) {
         this.generalParameters = merge({}, generalData, generalParameters);
         this.floormapParameters = merge({}, floormapData, floormapParameters);
@@ -51,6 +61,7 @@ export default class HospitalFloor {
             "./models/gltf/Hospital_Bed/hospital_bed.glb",
             (gltf) => {
                 const bed = gltf.scene;
+                this.setShadow(bed);
                 for (let i = -1; i <= 3; i += 1.9) {
                     for (let j = -1; j < 1; j += 1.12) {
                         const clone = bed.clone();
@@ -160,6 +171,7 @@ export default class HospitalFloor {
             "./models/gltf/Hospital_Door/hospital_door.glb",
             (gltf) => {
                 const door = gltf.scene;
+                this.setShadow(door);
                 for (let i = 0; i < 6; i ++) {
                     const clone = door.clone();
                     switch (i) {
@@ -224,6 +236,7 @@ export default class HospitalFloor {
             "./models/gltf/Patient/patient.glb",
             (gltf) => {
                 const patient = gltf.scene;
+                this.setShadow(patient);
                 for (let i = 1; i < 7; i ++) {
                     const clone = patient.clone();
                     switch (i) {
