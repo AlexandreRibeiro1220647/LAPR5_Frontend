@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Create Medical Condition</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="medCondForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" placeholder="Enter code" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Designation</mat-label>
+      <input matInput formControlName="designation" placeholder="Enter designation" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" placeholder="Enter description" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Common Symptoms</mat-label>
+      <input matInput formControlName="commonSymptoms" placeholder="Enter common symptoms" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary" class="Submit">Create</button>
+</mat-dialog-actions>
