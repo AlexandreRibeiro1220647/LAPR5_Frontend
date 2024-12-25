@@ -11,6 +11,9 @@ import {
   OperationRoomSchedulesComponent
 } from './components/admin/operation-room-schedules/operation-room-schedules.component';
 import { ThreeSceneComponent } from './components/three-scene/three-scene.component';
+import {
+  AllergiesMedicalConditionsComponent
+} from './components/admin/allergies-medical-conditions/allergies-medical-conditions.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
@@ -22,9 +25,10 @@ export const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'operation-type', component: OperationTypeComponent },
-      { path: 'staff', component: StaffComponente}, // alterem para o vosso
-      { path: 'patient', component: AdminPatientComponent }, // alterem para o vosso
+      { path: 'staff', component: StaffComponente},
+      { path: 'patient', component: AdminPatientComponent },
       { path: 'operationRoomSchedule', component: OperationRoomSchedulesComponent },
+      { path: 'misc', component: AllergiesMedicalConditionsComponent },
       { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
