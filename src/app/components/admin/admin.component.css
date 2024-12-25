@@ -16,7 +16,7 @@ body {
   margin: 20px auto;
   max-width: 90%;  /* Limits the table width */
   padding: 20px;
-  height: 535px;
+  height: 491px;
   overflow-y: auto; /* Allow vertical scrolling */
   background-color: rgb(49, 81, 102, 0.6); /* White background for the table container */
   border-radius: 8px; /* Rounded corners */
@@ -27,20 +27,20 @@ body {
 
 /* Ensure parent doesn't stretch children */
 .vertical-buttons {
+  max-width: 90%;  /* Limits the buttons container width */
   display: flex;
-  flex-direction: column;
   align-items: center; /* Center buttons or adjust as needed */
   gap: 25px; /* Add space between buttons */
   margin: 20px auto;
-  margin-top: 30px;
+  margin-top: 0px;
+  height: 24px; /* Desired height */
 }
 
 .vertical-buttons .right-button {
-  width: 12px; /* Force the width */
-  min-width: 12px; /* Prevent growing */
-  max-width: 12px; /* Prevent shrinking */
-  height: 169px; /* Desired height */
+  width: 200px; /* Force the width */
+  height: 12px; /* Desired height */
   padding: 0; /* Eliminate padding */
+  color: transparent;
   background-color: rgb(49, 81, 102, 0.7); /* Match theme */
   border-radius: 8px; /* Rounded edges */
   border: none; /* Remove borders */
@@ -52,5 +52,8 @@ body {
 
 /* On hover, only background changes */
 .vertical-buttons .right-button:hover {
+  color: rgb(49, 81, 102);
   background-color: rgb(165, 195, 217);
+  height: 24px; /* Desired height */
+  border: 1px solid rgb(49, 81, 102);
 }

@@ -31,4 +31,8 @@ export class AdminComponent {
   toOperationRoomSchedule() {
     this.router.navigate(['admin/operationRoomSchedule']);
   }
+
+  toMisc() {
+    this.router.navigate(['admin/misc']);
+  }
 }

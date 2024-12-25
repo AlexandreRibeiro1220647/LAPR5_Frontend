@@ -4,15 +4,12 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-<!-- Vertical Buttons -->
-<div class="vertical-buttons">
-  <button mat-flat-button (click)="toOperationType()" class="right-button"></button>
-  <button mat-flat-button (click)="toStaff()" class="right-button"></button>
-  <button mat-flat-button (click)="toPatient()" class="right-button"></button>
 </div>
-  <div class="vertical-buttons">
-    <button mat-flat-button (click)="toOperationRoomSchedule()" class="right-button"></button>
-  </div>
-
+<div class="vertical-buttons">
+  <button mat-flat-button (click)="toOperationType()" class="right-button">Operation Types</button>
+  <button mat-flat-button (click)="toStaff()" class="right-button">Staff</button>
+  <button mat-flat-button (click)="toPatient()" class="right-button">Patients</button>
+  <button mat-flat-button (click)="toOperationRoomSchedule()" class="right-button">Schedules</button>
+  <button mat-flat-button (click)="toMisc()" class="right-button">Allergies/Medical Conditions</button>
 </div>
 
