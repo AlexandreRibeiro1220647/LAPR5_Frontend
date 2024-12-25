@@ -22,22 +22,22 @@ export class PatientService {
 
   getItems(): Observable<Patient[]> {
     const headers = this.getAuthHeaders(this.getToken());
-    return this.http.get<Patient[]>(`${this.apiUrl}/Patient`,{ headers });
+    return this.http.get<Patient[]>(`${this.apiUrl}/Patients`,{ headers });
   }
 
   createItem(patient: CreatePatientDTO): Observable<CreatePatientDTO> {
     const headers = this.getAuthHeaders(this.getToken());
-    return this.http.post<CreatePatientDTO>(`${this.apiUrl}/Patient`, patient, { headers });
+    return this.http.post<CreatePatientDTO>(`${this.apiUrl}/Patients`, patient, { headers });
   }
 
   updateItem(id: string, patient: any): Observable<UpdatePatientDTO> {
     const headers = this.getAuthHeaders(this.getToken());
-    return this.http.put<any>(`${this.apiUrl}/Patient/${id}`, patient, { headers });
+    return this.http.put<any>(`${this.apiUrl}/Patients/${id}`, patient, { headers });
   }
 
   deleteItem(id: string): Observable<Patient> {
     //const headers = this.getAuthHeaders(this.getToken());
-    return this.http.delete<Patient>(`${this.apiUrl}/Patient/${id}`);
+    return this.http.delete<Patient>(`${this.apiUrl}/Patients/${id}`);
   }
 
   searchItems(filter: SearchPatientDTO): Observable<Patient[]> {
@@ -58,7 +58,7 @@ export class PatientService {
     }
 
     return this.http.get<Patient[]>(
-      `${this.apiUrl}/Patient/search`, { headers, params }
+      `${this.apiUrl}/Patients/search`, { headers, params }
     );
   }
 
