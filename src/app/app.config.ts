@@ -18,14 +18,15 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes), provideClientHydration(),
-    provideHttpClient(withFetch()), { provide: 'API_URL', useValue: environment.apiUrl },
-    { provide: 'API_URL', useValue: environment.apiUrl },
+    provideHttpClient(withFetch()),
+    { provide: 'API_URL', useValue: environment.backendApiUrl },
     { provide: 'PLANNING_URL', useValue: environment.planningUrl },
-    provideAnimationsAsync(), // Providing the API URL
+    { provide: 'BACKENDMRAM_URL', useValue: environment.backendMRAMApiUrl },
+    provideAnimationsAsync(),
     provideAnimations(),
     importProvidersFrom(MatTableModule, MatButtonModule),
     importProvidersFrom(LoginService),
-    { provide: JWT_OPTIONS, useValue: {} }, // Provide JWT_OPTIONS with an empty config
-    { provide: JwtHelperService, useClass: JwtHelperService }, provideAnimationsAsync(), // Provide JwtHelperService as a class
+    { provide: JWT_OPTIONS, useValue: {} },
+    { provide: JwtHelperService, useClass: JwtHelperService }
   ]
 };

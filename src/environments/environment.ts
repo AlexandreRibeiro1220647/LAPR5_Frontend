@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5012/api',
-  planningUrl: 'http://localhost:8080'
+  backendApiUrl: 'http://localhost:5012/api',
+  planningUrl: 'http://localhost:8080',
+  backendMRAMApiUrl: 'http://localhost:4040/api'
 };
