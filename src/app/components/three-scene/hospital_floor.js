@@ -232,46 +232,56 @@ export default class HospitalFloor {
         );
 
         // Create and add the patients
-        loader.load(
-            "./models/gltf/Patient/patient.glb",
-            (gltf) => {
-                const patient = gltf.scene;
-                this.setShadow(patient);
-                for (let i = 1; i < 7; i ++) {
-                    const clone = patient.clone();
-                    switch (i) {
-                        case 1:
-                            clone.position.set(-2.95, 0.31, 2.96);
-                            clone.visible = true;
-                            break;
-                        case 2:
-                            clone.position.set(-2.95, 0.31, -0.02);
-                            clone.visible = true;
-                            break;
-                        case 3:
-                            clone.position.set(-2.95, 0.31, -3.0);
-                            clone.visible = true;
-                            break;
-                        case 4:
-                            clone.position.set(2.97, 0.31, 2.96);
-                            clone.visible = true;
-                            break;
-                        case 5:
-                            clone.position.set(2.97, 0.31, -0.02);
-                            clone.visible = true;
-                            break;
-                        case 6:
-                            clone.position.set(2.97, 0.31, -3.0);
-                            clone.visible = true;
-                            break;
-                    }
-                    clone.scale.set(0.005, 0.005, 0.0045);
-                    clone.castShadow = true;
-                    clone.receiveShadow = true;
-                    this.scene3D.add(clone);
-                }
+        const occupationMapPath = './map/Occupation.json';
+        fetch(occupationMapPath)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.error('Error fetching JSON file:', response.status);
             }
-        );
+        })
+        .then(data => {
+            if (data) {
+                loader.load(
+                    './models/gltf/Patient/patient.glb',
+                    (gltf) => {
+                        const patient = gltf.scene;
+                        this.setShadow(patient);
+                        const operationRooms = Object.entries(data.occupationMap);
+                        operationRooms.forEach(([roomName, isVisible], i) => {
+                            const clone = patient.clone();
+                            switch (i + 1) {
+                                case 1:
+                                    clone.position.set(-2.95, 0.31, 2.96);
+                                    break;
+                                case 2:
+                                    clone.position.set(-2.95, 0.31, -0.02);
+                                    break;
+                                case 3:
+                                    clone.position.set(-2.95, 0.31, -3.0);
+                                    break;
+                                case 4:
+                                    clone.position.set(2.97, 0.31, 2.96);
+                                    break;
+                                case 5:
+                                    clone.position.set(2.97, 0.31, -0.02);
+                                    break;
+                                case 6:
+                                    clone.position.set(2.97, 0.31, -3.0);
+                                    break;
+                            }
+                            clone.visible = isVisible === 1;
+                            clone.scale.set(0.005, 0.005, 0.0045);
+                            clone.castShadow = true;
+                            clone.receiveShadow = true;
+                            this.scene3D.add(clone);
+                        });
+                    }
+                );
+            }
+        })
+        .catch(error => console.error('Error processing JSON file:', error));
 
         // Create the floor map
         this.floormap = new Floormap(this.floormapParameters);

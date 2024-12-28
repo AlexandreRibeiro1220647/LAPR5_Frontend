@@ -70,7 +70,7 @@ export default class Wall {
         geometry = new THREE.BufferGeometry().setAttribute("position", new THREE.BufferAttribute(points, 3)); // itemSize = 3 because there are 3 values (X, Y and Z components) per vertex
         geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
         geometry.setIndex(indices);
-        material = new THREE.MeshPhongMaterial({ color: 0xbfbfbf });
+        material = new THREE.MeshPhongMaterial({ color: 0xd9d9d9 });
         face = new THREE.Mesh(geometry, material);
         face.castShadow = true;
         face.receiveShadow = true;

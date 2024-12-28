@@ -3,32 +3,32 @@
   
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Patient Name"> Name </th>
-        <td mat-cell *matCellDef="let element"> {{ getPatientName(element.patientId) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.user.name }} </td>
       </ng-container>
   
       <ng-container matColumnDef="contactInformation">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Contact"> Contact </th>
-        <td mat-cell *matCellDef="let element"> {{ getPatientContactInformation(element.patientId) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.contactInformation }} </td>
       </ng-container>
   
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Email"> E-mail </th>
-        <td mat-cell *matCellDef="let element"> {{ getPatientEmail(element.patientId) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.user.email.value }} </td>
       </ng-container>
 
       <ng-container matColumnDef="medicalConditions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Medical Conditions"> Medical Conditions </th>
-        <td mat-cell *matCellDef="let element"> {{ getPatientMedicalConditions(element.patientId) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.medicalConditions.join(', ') }} </td>
       </ng-container>
 
       <ng-container matColumnDef="emergencyContact">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Emergency Contact"> Emergency Contact </th>
-        <td mat-cell *matCellDef="let element"> {{ getPatientEmergencyContact(element.patientId) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.emergencyContact }} </td>
       </ng-container>
 
       <ng-container matColumnDef="appointmentHistory">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Appointment History"> Appointments </th>
-        <td mat-cell *matCellDef="let element"> {{ getPatientAppointmentHistory(element.patientId) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.appointmentHistory.join(', ') }} </td>
       </ng-container>
   
       <!-- Header and Row Definitions -->
