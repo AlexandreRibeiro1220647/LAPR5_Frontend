@@ -355,6 +355,10 @@ export default class HospitalFloor {
         this.reset.addEventListener("click", event => this.buttonClick(event));
         this.resetAll.addEventListener("click", event => this.buttonClick(event));
         this.activeElement = document.activeElement;
+
+        this.selectedRoom = null;
+        this.overlay = null;
+        this.initOverlay();
     }
 
     displayPanel() {
@@ -407,6 +411,14 @@ export default class HospitalFloor {
         this.fixedViewCamera.updateWindowSize(window.innerWidth, window.innerHeight);
         this.topViewCamera.updateWindowSize(window.innerWidth, window.innerHeight);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    keyChange(event, down) {
+        if (down && (event.key === 'i' || event.key === 'I')) {
+            if (this.selectedRoom != null) {
+                this.toggleOverlay();
+            }
+        }
     }
 
     mouseDown(event) {
@@ -483,6 +495,10 @@ export default class HospitalFloor {
             const intersections = this.raycaster.intersectObjects(this.bedcubes, true);
             if (intersections.length > 0) {
                 const selectedObject = intersections[0].object;
+                
+                this.selectedRoom = selectedObject;
+                this.updateOverlayContent();
+                
                 switch (selectedObject) {
                     case this.bedcubes[0]:
                         this.line1.visible = true;
@@ -594,6 +610,8 @@ export default class HospitalFloor {
     }
 
     buttonClick(event) {
+        this.selectedRoom = null;
+        this.updateOverlayContent();
         switch (event.target.id) {
             case "reset":
                 this.activeViewCamera.initialize();
@@ -633,4 +651,42 @@ export default class HospitalFloor {
             }
         }
     }
+
+    initOverlay() {
+        // Create the overlay element and style it
+        this.overlay = document.createElement('div');
+        this.overlay.style.position = 'absolute';
+        this.overlay.style.top = '10px';
+        this.overlay.style.right = '10px';
+        this.overlay.style.padding = '10px';
+        this.overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        this.overlay.style.color = '#fff';
+        this.overlay.style.borderRadius = '5px';
+        this.overlay.style.display = 'none'; // Initially hidden
+        this.overlay.style.zIndex = '1000';
+        document.body.appendChild(this.overlay);
+    }
+    
+    toggleOverlay() {
+        if (this.selectedRoom) {
+            if (this.overlay.style.display === 'none') {
+                // Show the overlay
+                this.overlay.style.display = 'block';
+                // Update the overlay content
+                this.updateOverlayContent();
+            } else {
+                // Hide the overlay
+                this.overlay.style.display = 'none';
+            }
+        }
+    }
+    
+    updateOverlayContent() {
+        if (this.selectedRoom) {
+            // Replace this with actual room data retrieval logic
+            const roomInfo = `Room: ${this.selectedRoom.name || 'Unknown'}\nDetails: ${this.selectedRoom.details || 'No details available.'}`;
+            this.overlay.textContent = roomInfo;
+        }
+    }
+    
 }
