@@ -98,7 +98,7 @@ export default class HospitalFloor {
         this.line1.position.y = 0.18;
         this.line1.position.z = 3.025;
         this.scene3D.add(this.line1);
-        
+
         this.cube2 = new THREE.Mesh(geometrycube, materialcube);
         this.cube2.position.x = -2.96;
         this.cube2.position.y = 0.18;
@@ -446,17 +446,21 @@ export default class HospitalFloor {
                 if (event.buttons == 1) { // Primary button down
                     const pointer = new THREE.Vector2();
                     pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-			        pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+			              pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
                     let cameras;
                     cameras = [this.activeViewCamera];
                     for (const camera of cameras) {
                         this.raycaster.setFromCamera(pointer, camera.object);
-                        const intersections = this.raycaster.intersectObjects(this.bedcubes, true); 
+                        const intersections = this.raycaster.intersectObjects(this.bedcubes, true);
 
                         if (intersections.length > 0) {
                             const selectedObject = intersections[0].object;
-                            switch (selectedObject) {
+
+                          this.selectedRoom = selectedObject;
+                          this.updateOverlayContent();
+
+                          switch (selectedObject) {
                                 case this.bedcubes[0]:
                                     camera.object.position.set(-4, 4, 4);
                                     camera.object.lookAt(-2.96, 0.18, 3.025);
@@ -480,16 +484,16 @@ export default class HospitalFloor {
                                 case this.bedcubes[5]:
                                     camera.object.position.set(2, 4, -2);
                                     camera.object.lookAt(2.975, 0.18, -2.94);
-                                    break;    
+                                    break;
                                 default:
                             }
-                        } 
+                        }
                     }
                 }
                 else { // Secondary button down
                     this.changeCameraOrientation = true;
                 }
-                
+
             }
         }
     }
@@ -505,10 +509,6 @@ export default class HospitalFloor {
             const intersections = this.raycaster.intersectObjects(this.bedcubes, true);
             if (intersections.length > 0) {
                 const selectedObject = intersections[0].object;
-                
-                this.selectedRoom = selectedObject;
-                this.updateOverlayContent();
-                
                 switch (selectedObject) {
                     case this.bedcubes[0]:
                         this.line1.visible = true;
@@ -527,7 +527,7 @@ export default class HospitalFloor {
                         break;
                     case this.bedcubes[5]:
                         this.line6.visible = true;
-                        break;    
+                        break;
                     default:
                 }
             } else {
@@ -676,7 +676,7 @@ export default class HospitalFloor {
         this.overlay.style.zIndex = '1000';
         document.body.appendChild(this.overlay);
     }
-    
+
     toggleOverlay() {
         if (this.selectedRoom) {
             if (this.overlay.style.display === 'none') {
@@ -690,7 +690,7 @@ export default class HospitalFloor {
             }
         }
     }
-    
+
     updateOverlayContent() {
         if (this.selectedRoom) {
             // Replace this with actual room data retrieval logic
@@ -698,5 +698,5 @@ export default class HospitalFloor {
             this.overlay.textContent = roomInfo;
         }
     }
-    
+
 }
