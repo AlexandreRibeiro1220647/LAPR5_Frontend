@@ -289,6 +289,12 @@ export default class HospitalFloor {
         // Create the lights
         this.lights = new Lights(this.lightsParameters);
 
+        this.spotlight = new THREE.SpotLight(0xffffff, 0);
+        this.spotlight.angle = THREE.MathUtils.degToRad(20);
+        this.spotlight.penumbra = 0.4;
+        this.scene3D.add(this.spotlight);
+        this.scene3D.add(this.spotlight.target);
+
         // Create the cameras corresponding to the four different views: fixed view and top view
         this.fixedViewCamera = new Camera(this.fixedViewCameraParameters, window.innerWidth, window.innerHeight);
         this.topViewCamera = new Camera(this.topViewCameraParameters, window.innerWidth, window.innerHeight);
@@ -457,35 +463,61 @@ export default class HospitalFloor {
                         if (intersections.length > 0) {
                             const selectedObject = intersections[0].object;
 
-                          this.selectedRoom = selectedObject;
-                          this.updateOverlayContent();
+                            this.selectedRoom = selectedObject;
+                            this.updateOverlayContent();
 
-                          switch (selectedObject) {
+                            this.spotlight.intensity = 30;
+                            switch (selectedObject) {
                                 case this.bedcubes[0]:
+                                    this.activeViewCamera.initialize();
                                     camera.object.position.set(-4, 4, 4);
                                     camera.object.lookAt(-2.96, 0.18, 3.025);
+
+                                    this.spotlight.position.copy(camera.object.position);
+                                    this.spotlight.target = this.bedcubes[0];
                                     break;
                                 case this.bedcubes[1]:
+                                    this.activeViewCamera.initialize();
                                     camera.object.position.set(-4, 4, 1);
                                     camera.object.lookAt(-2.96, 0.18, 0.04);
+
+                                    this.spotlight.position.copy(camera.object.position);
+                                    this.spotlight.target = this.bedcubes[1];
                                     break;
                                 case this.bedcubes[2]:
+                                    this.activeViewCamera.initialize();
                                     camera.object.position.set(-4, 4, -2);
                                     camera.object.lookAt(-2.96, 0.18, -2.94);
+
+                                    this.spotlight.position.copy(camera.object.position);
+                                    this.spotlight.target = this.bedcubes[2];
                                     break;
                                 case this.bedcubes[3]:
+                                    this.activeViewCamera.initialize();
                                     camera.object.position.set(2, 4, 4);
                                     camera.object.lookAt(2.975, 0.18, 3.025);
+
+                                    this.spotlight.position.copy(camera.object.position);
+                                    this.spotlight.target = this.bedcubes[3];
                                     break;
                                 case this.bedcubes[4]:
+                                    this.activeViewCamera.initialize();
                                     camera.object.position.set(2, 4, 1);
                                     camera.object.lookAt(2.975, 0.18, 0.04);
+
+                                    this.spotlight.position.copy(camera.object.position);
+                                    this.spotlight.target = this.bedcubes[4];
                                     break;
                                 case this.bedcubes[5]:
+                                    this.activeViewCamera.initialize();
                                     camera.object.position.set(2, 4, -2);
                                     camera.object.lookAt(2.975, 0.18, -2.94);
-                                    break;
+
+                                    this.spotlight.position.copy(camera.object.position);
+                                    this.spotlight.target = this.bedcubes[5];
+                                    break;    
                                 default:
+                                    return;
                             }
                         }
                     }
@@ -553,6 +585,7 @@ export default class HospitalFloor {
                 }
                 else { // Secondary button down
                     if (this.changeCameraOrientation) {
+                        this.spotlight.intensity = 0;
                         this.activeViewCamera.updateOrientation(mouseIncrement.multiply(new THREE.Vector2(-0.5, 0.5)));
                         this.displayPanel();
                     }
@@ -624,9 +657,11 @@ export default class HospitalFloor {
         this.updateOverlayContent();
         switch (event.target.id) {
             case "reset":
+                this.spotlight.intensity = 0;
                 this.activeViewCamera.initialize();
                 break;
             case "reset-all":
+                this.spotlight.intensity = 0;
                 this.fixedViewCamera.initialize();
                 this.topViewCamera.initialize();
                 break;
