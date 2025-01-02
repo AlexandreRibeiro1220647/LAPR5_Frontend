@@ -1,4 +1,4 @@
-name: Build and Text Workflow
+name: Build and Test Workflow
 
 on:
   push:
