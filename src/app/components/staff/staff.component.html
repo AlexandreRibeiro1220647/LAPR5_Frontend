@@ -1,61 +1,11 @@
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">    
-    <!-- Operation Request ID Column -->
-    <ng-container matColumnDef="operationRequestId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Request ID </th>
-      <td mat-cell *matCellDef="let element"> {{ element.operationId }} </td>
-    </ng-container>
-
-    <!-- Patient ID Column -->
-    <ng-container matColumnDef="pacientId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Pacient Name"> Patient </th>
-      <td mat-cell *matCellDef="let element"> {{ getPatientName(element.patientId) }} </td>
-    </ng-container>
-
-    <!-- Doctor ID Column -->
-    <ng-container matColumnDef="doctorId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Doctor Name"> Doctor </th>
-      <td mat-cell *matCellDef="let element"> {{ getStaffName(element.doctorId) }} </td>
-    </ng-container>
-
-    <!-- Operation Type ID Column -->
-    <ng-container matColumnDef="operationTypeId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Operation Type Name"> Operation Type </th>
-      <td mat-cell *matCellDef="let element"> {{ getOperationTypeName(element.operationTypeId) }} </td>
-    </ng-container>
-    
-
-    <!-- Priority Column -->
-    <ng-container matColumnDef="priority">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Priority"> Priority </th>
-      <td mat-cell *matCellDef="let element"> {{ element.priority }} </td>
-    </ng-container>
-
-    <!-- Deadline Column -->
-    <ng-container matColumnDef="deadline">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Deadline"> Deadline </th>
-      <td mat-cell *matCellDef="let element"> {{ element.deadline}} </td>
-    </ng-container>
-
-    <!-- Header and Row Definitions -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="toggleSelection(row)"
-        [class.selected]="selection.isSelected(row)">
-    </tr>
-
- 
-
-  </table>
-
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
-  <div class="button-container">
-    <button mat-flat-button (click)="openCreateDialog()" class="create-button">Create</button>
-    <button mat-flat-button (click)="openEditDialog()" class="edit-button">Edit</button>
-    <button mat-flat-button (click)="deleteOperationRequest()" class="delete-button">Delete</button>
-    <button mat-flat-button (click)="openSearchDialog()" class="search-button">Search</button>
-
+<div class="main-container">
+  <div class="mat-elevation-z8">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  </div>
+</div>
+<div class="vertical-buttons">
+  <button mat-flat-button (click)="toOperationRequest()" class="right-button">OperationRequest</button>
+</div>
 

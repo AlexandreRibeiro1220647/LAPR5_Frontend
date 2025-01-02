@@ -14,10 +14,18 @@ import { ThreeSceneComponent } from './components/three-scene/three-scene.compon
 import {
   AllergiesMedicalConditionsComponent
 } from './components/admin/allergies-medical-conditions/allergies-medical-conditions.component';
+import {OperationRequestComponent} from './components/staff/operation-request/operation-request.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
-  { path: 'staff', component: StaffComponent },
+  {
+    path: 'staff',
+    component: StaffComponent,
+    children: [
+      { path: 'operation-request', component: OperationRequestComponent },
+      { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
+    ],
+  },
   { path: 'patient', component: PatientComponent },
   { path: 'three-scene', component: ThreeSceneComponent },
   {
