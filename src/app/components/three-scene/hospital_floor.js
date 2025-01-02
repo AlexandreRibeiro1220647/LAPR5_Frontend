@@ -248,8 +248,8 @@ export default class HospitalFloor {
                     (gltf) => {
                         const patient = gltf.scene;
                         this.setShadow(patient);
-                        const operationRooms = Object.entries(data.occupationMap);
-                        operationRooms.forEach(([roomName, isVisible], i) => {
+                        this.operationRooms = Object.entries(data.occupationMap);
+                        this.operationRooms.forEach(([roomName, isVisible], i) => {
                             const clone = patient.clone();
                             switch (i + 1) {
                                 case 1:
@@ -372,10 +372,30 @@ export default class HospitalFloor {
         this.resetAll.addEventListener("click", event => this.buttonClick(event));
         this.activeElement = document.activeElement;
 
+        this.occupationMap = {};
+        this.roomInfo = {};
+        this.patientsInfo = {};
+        this.loadData();
         this.selectedRoom = null;
         this.overlay = null;
         this.initOverlay();
     }
+
+  async loadData() {
+    try {
+      const response = await fetch('./map/Occupation.json');
+      const data = await response.json();
+
+      // Destructure JSON data into class properties
+      this.occupationMap = Object.entries(data.occupationMap) || {};
+      this.roomInfo = data.roomInfo || {};
+      this.patientsInfo = data.patientsInfo || {};
+
+      console.log('Data loaded:', data);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
 
     displayPanel() {
         this.view.options.selectedIndex = ["fixed", "top"].indexOf(this.activeViewCamera.view);
@@ -463,8 +483,6 @@ export default class HospitalFloor {
                         if (intersections.length > 0) {
                             const selectedObject = intersections[0].object;
 
-                            this.selectedRoom = selectedObject;
-                            this.updateOverlayContent();
 
                             this.spotlight.intensity = 30;
                             switch (selectedObject) {
@@ -475,6 +493,9 @@ export default class HospitalFloor {
 
                                     this.spotlight.position.copy(camera.object.position);
                                     this.spotlight.target = this.bedcubes[0];
+
+                                    this.selectRoom(0);
+                                    this.updateOverlayContent();
                                     break;
                                 case this.bedcubes[1]:
                                     this.activeViewCamera.initialize();
@@ -483,6 +504,9 @@ export default class HospitalFloor {
 
                                     this.spotlight.position.copy(camera.object.position);
                                     this.spotlight.target = this.bedcubes[1];
+
+                                    this.selectRoom(1);
+                                    this.updateOverlayContent();
                                     break;
                                 case this.bedcubes[2]:
                                     this.activeViewCamera.initialize();
@@ -491,6 +515,9 @@ export default class HospitalFloor {
 
                                     this.spotlight.position.copy(camera.object.position);
                                     this.spotlight.target = this.bedcubes[2];
+
+                                    this.selectRoom(2);
+                                    this.updateOverlayContent();
                                     break;
                                 case this.bedcubes[3]:
                                     this.activeViewCamera.initialize();
@@ -499,6 +526,9 @@ export default class HospitalFloor {
 
                                     this.spotlight.position.copy(camera.object.position);
                                     this.spotlight.target = this.bedcubes[3];
+
+                                    this.selectRoom(3);
+                                    this.updateOverlayContent();
                                     break;
                                 case this.bedcubes[4]:
                                     this.activeViewCamera.initialize();
@@ -507,6 +537,9 @@ export default class HospitalFloor {
 
                                     this.spotlight.position.copy(camera.object.position);
                                     this.spotlight.target = this.bedcubes[4];
+
+                                    this.selectRoom(4);
+                                    this.updateOverlayContent();
                                     break;
                                 case this.bedcubes[5]:
                                     this.activeViewCamera.initialize();
@@ -515,7 +548,10 @@ export default class HospitalFloor {
 
                                     this.spotlight.position.copy(camera.object.position);
                                     this.spotlight.target = this.bedcubes[5];
-                                    break;    
+
+                                    this.selectRoom(5);
+                                    this.updateOverlayContent();
+                                    break;
                                 default:
                                     return;
                             }
@@ -709,6 +745,7 @@ export default class HospitalFloor {
         this.overlay.style.borderRadius = '5px';
         this.overlay.style.display = 'none'; // Initially hidden
         this.overlay.style.zIndex = '1000';
+        this.overlay.style.whiteSpace = 'pre-line'; // Respect line breaks
         document.body.appendChild(this.overlay);
     }
 
@@ -726,12 +763,37 @@ export default class HospitalFloor {
         }
     }
 
-    updateOverlayContent() {
-        if (this.selectedRoom) {
-            // Replace this with actual room data retrieval logic
-            const roomInfo = `Room: ${this.selectedRoom.name || 'Unknown'}\nDetails: ${this.selectedRoom.details || 'No details available.'}`;
-            this.overlay.textContent = roomInfo;
+  selectRoom(roomNumber) {
+      const room = this.occupationMap[roomNumber]
+    this.selectedRoom = { [room[0]]: room[1] || 0 };
+    console.log('Room selected:', this.selectedRoom);
+  }
+
+  updateOverlayContent() {
+    if (this.selectedRoom) {
+      const roomName = Object.keys(this.selectedRoom)[0];
+      const isOccupied = Object.entries(this.selectedRoom)[0][1] === 1;
+
+      let roomInfo = `Room: ${roomName || 'Unknown'}\n`;
+
+      if (isOccupied) {
+        const roomUUID = this.roomInfo[roomName];
+        if (roomUUID && this.patientsInfo[roomUUID]) {
+          const patientInfo = this.patientsInfo[roomUUID];
+          roomInfo += `\nDetails: Occupied\n`;
+          roomInfo += `Patient Name: ${patientInfo.name}\n`;
+          roomInfo += `Gender: ${patientInfo.gender}\n`;
+          roomInfo += `Birth Date: ${patientInfo.birthDate}\n`;
+          roomInfo += `Operation Type: ${patientInfo.operationType}`;
+        } else {
+          roomInfo += `\nDetails: Occupied\nPatient details not found.`;
         }
+      } else {
+        roomInfo += `\nDetails: Not Occupied`;
+      }
+
+      this.overlay.textContent = roomInfo;
     }
+  }
 
 }

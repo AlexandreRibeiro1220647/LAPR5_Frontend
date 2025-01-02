@@ -6,5 +6,30 @@
         "Operation Room 4": 0,
         "Operation Room 5": 1,
         "Operation Room 6": 0
+    },
+    "roomInfo": {
+      "Operation Room 1": "UUID1",
+      "Operation Room 2": "UUID2",
+      "Operation Room 5": "UUID3"
+    },
+  "patientsInfo": {
+    "UUID1": {
+      "name": "Patient 1",
+      "gender": "Male",
+      "birthDate": "12/01/2000",
+      "operationType": "Meniscus Injury"
+    },
+    "UUID2": {
+      "name": "Patient 2",
+      "gender": "Female",
+      "birthDate": "13/03/1950",
+      "operationType": "Orthopedic Related"
+    },
+    "UUID3": {
+      "name": "Patient 3",
+      "gender": "Female",
+      "birthDate": "22/12/2012",
+      "operationType": "Knee Dysfunction"
     }
+  }
 }
