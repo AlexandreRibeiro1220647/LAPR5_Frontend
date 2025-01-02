@@ -21,6 +21,14 @@ jobs:
     - name: Build Angular Application
       run: npm run build
 
+    - name: Start Angular Server
+      run: |
+        nohup npm start &
+        # Wait for the server to be available (optional but recommended)
+        npx wait-on http://localhost:4200
+      env:
+        CI: true
+      
     - name: Install Cypress
       run: npm install cypress --save-dev
 
