@@ -21,5 +21,7 @@ jobs:
     - name: Build Angular Application
       run: npm run build
 
-    - name: Run Tests
-      run: npm test
+    - name: Install xvfb
+      run: sudo apt-get install -y xvfb
+    - name: Start xvfb
+      run: xvfb-run --server-args="-screen 0 1024x768x24" npm test
