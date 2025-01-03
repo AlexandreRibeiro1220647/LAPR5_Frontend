@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Create Room Type</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="roomTypeForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>RoomType Designation</mat-label>
+      <input matInput formControlName="roomDesignation" placeholder="Enter roomType designation" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>RoomType Description</mat-label>
+      <input matInput formControlName="roomDescription" placeholder="Enter RoomType Description" />
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary" class="Submit">Create</button>
+</mat-dialog-actions>
