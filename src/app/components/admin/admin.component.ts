@@ -32,12 +32,16 @@ export class AdminComponent {
     this.router.navigate(['admin/operationRoomSchedule']);
   }
 
-  toMisc() {
-    this.router.navigate(['admin/misc']);
+  toAllergies() {
+    this.router.navigate(['admin/allergies']);
+  }
+
+  toMedicalConditions() {
+    this.router.navigate(['admin/medicalConditions']);
   }
 
   toRoomType(){
     this.router.navigate(['admin/room-type'])
   }
-  
+
 }
