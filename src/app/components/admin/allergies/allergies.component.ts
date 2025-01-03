@@ -20,6 +20,7 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AllergiesService} from '../../../services/allergies/allergies.service';
 import {AllergyDTO} from '../../../models/allergy/allergyDTO';
 import {AllergiesDialogComponent} from '../../dialog/allergies/allergies-dialog.component';
+import * as Console from 'console';
 
 @Component({
   selector: 'app-allergies',
@@ -144,11 +145,10 @@ export class AllergiesComponent implements OnInit, AfterViewInit {
       if (
         (typeof cleanedData[key] === 'string' && cleanedData[key] === "") ||  // Check if it's an empty string
         (Array.isArray(cleanedData[key]) && cleanedData[key].length === 0) ||  // Check if it's an empty array
-        (Array.isArray(cleanedData[key]) && cleanedData[key].every(item => item === "")) ||  // Check if array contains only empty strings
+        (Array.isArray(cleanedData[key]) && cleanedData[key].every(item => item === ""))  // Check if array contains only empty strings
 
-        cleanedData === originalData  // If the value hasn't changed, remove it
       ) {
-        delete cleanedData[key];
+        cleanedData[key] = originalData[key];
       }
     });
 
