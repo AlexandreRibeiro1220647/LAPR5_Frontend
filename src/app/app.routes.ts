@@ -14,7 +14,9 @@ import { ThreeSceneComponent } from './components/three-scene/three-scene.compon
 import {
   AllergiesMedicalConditionsComponent
 } from './components/admin/allergies-medical-conditions/allergies-medical-conditions.component';
-import {OperationRequestComponent} from './components/staff/operation-request/operation-request.component';
+import { AppointmentSurgeryComponent } from './components/staff/appointment-surgery/appointment-surgery.component';
+import { RoomTypeComponent } from './components/admin/room-type/room-type.component';
+import { StaffComponentOperations } from './components/staff/operation-requests/staff.component-operations';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
@@ -22,7 +24,8 @@ export const routes: Routes = [
     path: 'staff',
     component: StaffComponent,
     children: [
-      { path: 'operation-request', component: OperationRequestComponent },
+      { path: 'operation-request', component: StaffComponentOperations },
+      { path: 'appointment-surgery', component: AppointmentSurgeryComponent},
       { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
@@ -37,6 +40,7 @@ export const routes: Routes = [
       { path: 'patient', component: AdminPatientComponent },
       { path: 'operationRoomSchedule', component: OperationRoomSchedulesComponent },
       { path: 'misc', component: AllergiesMedicalConditionsComponent },
+      { path: 'room-type', component: RoomTypeComponent},
       { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },

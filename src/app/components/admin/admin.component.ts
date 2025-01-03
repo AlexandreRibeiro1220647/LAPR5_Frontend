@@ -35,4 +35,9 @@ export class AdminComponent {
   toMisc() {
     this.router.navigate(['admin/misc']);
   }
+
+  toRoomType(){
+    this.router.navigate(['admin/room-type'])
+  }
+  
 }
