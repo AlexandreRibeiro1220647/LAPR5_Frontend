@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Update Appointment Surgery</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="appointmentSurgeryForm">
+    <!-- Room Name Input -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Room Name</mat-label>
+      <input matInput formControlName="roomName" placeholder="Enter Room Name" />
+    </mat-form-field>
+
+    <!-- Appointment Surgery Name Input -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Appointment Surgery Name</mat-label>
+      <input matInput formControlName="appointmentSurgeryName" placeholder="Enter Appointment Surgery Name" />
+    </mat-form-field>
+
+    <!-- Appointment Surgery Status -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Appointment Surgery Status</mat-label>
+      <mat-select formControlName="appointmentSurgeryStatus">
+        <mat-option value="Scheduled">Scheduled</mat-option>
+        <mat-option value="Completed">Completed</mat-option>
+        <mat-option value="Canceled">Canceled</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Appointment Surgery Date -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Appointment Surgery Date</mat-label>
+      <input matInput formControlName="appointmentSurgeryDate" type="date" placeholder="Enter Date" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Update</button>
+</mat-dialog-actions>
