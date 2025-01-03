@@ -12,14 +12,17 @@ import {
 } from './components/admin/operation-room-schedules/operation-room-schedules.component';
 import { ThreeSceneComponent } from './components/three-scene/three-scene.component';
 import {
-  AllergiesMedicalConditionsComponent
-} from './components/admin/allergies-medical-conditions/allergies-medical-conditions.component';
+  AllergiesComponent
+} from './components/admin/allergies/allergies.component';
 import { AppointmentSurgeryComponent } from './components/staff/appointment-surgery/appointment-surgery.component';
 import { RoomTypeComponent } from './components/admin/room-type/room-type.component';
 import { StaffComponentOperations } from './components/staff/operation-requests/staff.component-operations';
+import {MedicalConditionsComponent} from './components/admin/medical-conditions/medical-conditions.component';
+import {PrivacyPolicyComponent} from './components/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
   {path : 'under-dev', component: UnderDevelopmentComponent},
+  {path : 'privacy-policy', component: PrivacyPolicyComponent},
   {
     path: 'staff',
     component: StaffComponent,
@@ -39,8 +42,9 @@ export const routes: Routes = [
       { path: 'staff', component: StaffComponente},
       { path: 'patient', component: AdminPatientComponent },
       { path: 'operationRoomSchedule', component: OperationRoomSchedulesComponent },
-      { path: 'misc', component: AllergiesMedicalConditionsComponent },
       { path: 'room-type', component: RoomTypeComponent},
+      { path: 'allergies', component: AllergiesComponent },
+      { path: 'medicalConditions', component: MedicalConditionsComponent },
       { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
