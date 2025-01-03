@@ -19,5 +19,8 @@ export class StaffComponent {
   toOperationRequest() {
     this.router.navigate(['staff/operation-request']);
   }
-
+  
+  toAppointmentSurgery() {
+    this.router.navigate(['staff/appointment-surgery'])
+  }
 }

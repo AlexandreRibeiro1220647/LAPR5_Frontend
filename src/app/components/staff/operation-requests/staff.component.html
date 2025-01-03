@@ -1,4 +1,5 @@
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">    
     <!-- Operation Request ID Column -->
     <ng-container matColumnDef="operationRequestId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Request ID </th>
@@ -22,7 +23,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Operation Type Name"> Operation Type </th>
       <td mat-cell *matCellDef="let element"> {{ getOperationTypeName(element.operationTypeId) }} </td>
     </ng-container>
-
+    
 
     <!-- Priority Column -->
     <ng-container matColumnDef="priority">
@@ -43,7 +44,7 @@
         [class.selected]="selection.isSelected(row)">
     </tr>
 
-
+ 
 
   </table>
 
@@ -55,5 +56,6 @@
     <button mat-flat-button (click)="deleteOperationRequest()" class="delete-button">Delete</button>
     <button mat-flat-button (click)="openSearchDialog()" class="search-button">Search</button>
 
+  </div>
   </div>
 

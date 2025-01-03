@@ -1,11 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { of } from 'rxjs';
-import { StaffComponent } from '../staff.component';
 import { OperationRequestService } from '../../../services/operation-requests/operation-requests.service';
 import { OperationRequest } from '../../../models/operation-requests/operationRequest';
+import { OperationType } from '../../../models/operation-types/operationType';
+import { Patient } from '../../../models/patient/patient';
+import { Staff } from '../../../models/staff/staff';
 import { SearchOperationRequestDTO } from '../../../models/operation-requests/searchOperationRequestsDTO';
+import { StaffComponentOperations } from './staff.component-operations';
 
 // Mock Service
 class MockOperationRequestService {
@@ -27,14 +32,14 @@ class MockMatDialog {
 }
 
 describe('StaffComponent', () => {
-  let component: StaffComponent;
-  let fixture: ComponentFixture<StaffComponent>;
+  let component: StaffComponentOperations;
+  let fixture: ComponentFixture<StaffComponentOperations>;
   let mockService: MockOperationRequestService;
   let mockDialog: MockMatDialog;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatTableModule, StaffComponent],
+      imports: [MatTableModule, StaffComponentOperations],
       providers: [
         { provide: OperationRequestService, useClass: MockOperationRequestService },
         { provide: MatDialog, useClass: MockMatDialog }
@@ -45,8 +50,8 @@ describe('StaffComponent', () => {
     mockDialog = TestBed.inject(MatDialog) as any;
 
 
-
-    fixture = TestBed.createComponent(StaffComponent);
+    
+    fixture = TestBed.createComponent(StaffComponentOperations);
     component = fixture.componentInstance;
 
     // Mock ViewChild elements
@@ -110,22 +115,22 @@ describe('StaffComponent', () => {
       patientName: '',
       patientId: '',
       operationTypeName: '',
-      priority: 'Urgent',
+      priority: 'Urgent', 
       deadline: ''
     };
-
+  
     const mockFilteredData: OperationRequest[] = [
-      { operationId: '2', patientId: '12345',  doctorId: "d2" ,operationTypeId: '10',    priority: 'Urgent',    deadline: '2024-12-31'},
+        { operationId: '2', patientId: '12345',  doctorId: "d2" ,operationTypeId: '10',    priority: 'Urgent',    deadline: '2024-12-31'},
     ];
-
+  
     const dialogRefMock = { afterClosed: () => of(mockSearchData) } as MatDialogRef<any>;
-
+  
     // Simular comportamento dos serviços
     mockDialog.open.and.returnValue(dialogRefMock);
     mockService.searchItems.and.returnValue(of(mockFilteredData));
-
+  
     component.openSearchDialog();
-
+  
     // Verificações
     expect(mockDialog.open).toHaveBeenCalled();
     expect(mockService.searchItems).toHaveBeenCalledWith(mockSearchData);

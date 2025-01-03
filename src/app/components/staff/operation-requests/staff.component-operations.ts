@@ -13,6 +13,7 @@ import {MatSort, MatSortHeader, Sort} from '@angular/material/sort';
 import {MatButton} from '@angular/material/button';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatInput} from '@angular/material/input';
+import {OperationTypesDialogComponent} from '../../dialog/operation-types/create/operation-types-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateOperationRequestDTO} from '../../../models/operation-requests/createOperationRequestDTO';
 import {MatCheckbox} from '@angular/material/checkbox';
@@ -28,6 +29,7 @@ import {
   OperationRequestSearchDialogComponent
 } from '../../dialog/operation-requests/search/operation-request-dialog-search';
 import {SearchOperationRequestDTO} from '../../../models/operation-requests/searchOperationRequestsDTO';
+import { OperationTypesService } from '../../../services/operation-types/operation-types.service';
 import { OperationType } from '../../../models/operation-types/operationType';
 import { Patient } from '../../../models/patient/patient';
 import { Staff } from '../../../models/staff/staff';
@@ -36,7 +38,7 @@ import { Staff } from '../../../models/staff/staff';
 
 
 @Component({
-  selector: 'app-operation-request',
+  selector: 'app-staff',
   standalone: true,
   imports: [
     MatTable,
@@ -60,10 +62,10 @@ import { Staff } from '../../../models/staff/staff';
     MatSortHeader,
     MatSelectModule
   ],
-  templateUrl: './operation-request.component.html',
-  styleUrls: ['./operation-request.component.css']
+  templateUrl: './staff.component.html',
+  styleUrls: ['./staff.component.css']
 })
-export class OperationRequestComponent implements OnInit, AfterViewInit {
+export class StaffComponentOperations implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
 
   displayedColumns: string[] = [ 'pacientId', 'doctorId', 'operationTypeId', 'priority', 'deadline'];
@@ -78,16 +80,16 @@ export class OperationRequestComponent implements OnInit, AfterViewInit {
   }
 
   operationTypes: OperationType[] = [];
-  patients: Patient[] = [];
-  staffs: Staff[] = [];
+  patients: Patient[] = []; 
+  staffs: Staff[] = []; 
 
 
   ngOnInit() {
     this.loadOperationRequests();
     this.loadOperationTypes();
-    this.loadPatients();
+    this.loadPatients(); 
     this.loadStaffs();
-
+    
   }
 
   ngAfterViewInit() {
