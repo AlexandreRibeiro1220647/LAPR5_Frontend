@@ -1,0 +1,55 @@
+/* Table Styles */
+table.mat-table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures the table rows and columns are closely packed */
+}
+
+th.mat-header-cell, td.mat-cell {
+  padding: 12px 20px; /* Adjust padding to make the table cells more spacious */
+  text-align: left;
+  font-size: 14px; /* Set font size for readability */
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+  font-size: 14px;
+}
+
+td, th {
+  width: 25%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Align items to the left */
+}
+
+.button-container .create-button,
+.button-container .edit-button,
+.button-container .delete-button,
+.button-container .search-button
+{
+  margin: 20px auto;
+  padding: 23px 37px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px; /* Make sure the corners are rounded */
+  background-color: rgb(49, 81, 102); /* Default background color */
+  color: white;
+  border: 2px solid rgb(49, 81, 102);
+}
+
+/* Hover effect for button1 */
+.button-container .create-button:hover,
+.button-container .edit-button:hover,
+.button-container .delete-button:hover,
+.button-container .search-button:hover
+{
+  background-color: rgb(164, 193, 216, 0.6);
+  color: white;
+}
+
+.selected {
+  background-color: rgba(164, 193, 216, 0.1); /* Light blue highlight */
+}
