@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Search Medical Conditions</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="medicalConditionsForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" placeholder="Enter Code" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Designation</mat-label>
+      <input matInput formControlName="designation" placeholder="Enter Medical Condition Designation" />
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" color="primary">Search</button>
+</mat-dialog-actions>
