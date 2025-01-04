@@ -23,4 +23,12 @@ export class StaffComponent {
   toAppointmentSurgery() {
     this.router.navigate(['staff/appointment-surgery'])
   }
+
+  toAllergies(){
+    this.router.navigate(['staff/allergies'])
+  }
+
+  toMedicalConditions(){
+    this.router.navigate(['staff/medicalConditions'])
+  }
 }
