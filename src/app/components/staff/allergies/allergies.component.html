@@ -1,0 +1,38 @@
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">
+
+    <!-- Code Column -->
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Code"> Code </th>
+      <td mat-cell *matCellDef="let element"> {{ element.code }} </td>
+    </ng-container>
+  
+    <!-- Designation Column -->
+    <ng-container matColumnDef="designation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Designation"> Designation </th>
+      <td mat-cell *matCellDef="let element"> {{ element.designation }} </td>
+    </ng-container>
+  
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Description"> Description </th>
+      <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+    </ng-container>
+  
+  
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="toggleSelection(row)"
+        [class.selected]="selection.isSelected(row)">
+    </tr>
+  
+  
+  </table>
+  
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons ></mat-paginator>
+  
+  <div class="button-container">
+    <button mat-flat-button (click)="openEditDialog()" class="edit-button">Edit</button>
+    <button mat-flat-button (click)="openSearchDialog()" class="search-button">Search</button>
+  </div>
+  
