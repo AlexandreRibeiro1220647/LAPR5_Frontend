@@ -1,7 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {MedicalConditionDTO} from '../../models/medical-condition/medicalConditionDTO';
+import { SearchMedicalConditionDTO } from '../../models/medical-condition/searchMedicalConditionDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,24 @@ export class MedicalConditionsService {
     const headers = this.getAuthHeaders(this.getToken());
     return this.http.put<any>(`${this.mram_api_url}/medicalConditions`, medicalCondition, { headers });
   }
+
+    searchItems(allergy: SearchMedicalConditionDTO): Observable<MedicalConditionDTO[]> {
+        const headers = this.getAuthHeaders(this.getToken());
+        let params = new HttpParams();
+    
+        if (allergy.code) {
+          params = params.set('code', allergy.code);
+        }
+    
+        if (allergy.designation) {
+          params = params.set('designation', allergy.designation);
+        }
+    
+   
+        return this.http.get<MedicalConditionDTO[]>(
+          `${this.mram_api_url}/medicalConditions/search`, { params , headers }
+        );  }
+    
 
   getToken(): any {
     if (typeof window !== 'undefined') {
