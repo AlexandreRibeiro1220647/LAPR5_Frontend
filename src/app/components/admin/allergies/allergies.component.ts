@@ -21,6 +21,10 @@ import {AllergiesService} from '../../../services/allergies/allergies.service';
 import {AllergyDTO} from '../../../models/allergy/allergyDTO';
 import {AllergiesDialogComponent} from '../../dialog/allergies/allergies-dialog.component';
 import * as Console from 'console';
+import {
+  AllergiesSearchDialogComponent
+} from '../../dialog/allergies/search-for-staff/allergies-dialog-search.component';
+import {SearchAllergyDTO} from '../../../models/allergy/searchAllergyDTO';
 
 @Component({
   selector: 'app-allergies',
@@ -173,12 +177,13 @@ export class AllergiesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /*openSearchDialog(): void {
-    const dialogRef = this.dialog.open(AllergiesDialogComponent, {
+
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(AllergiesSearchDialogComponent, {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe((result: AllergyDTO | undefined) => {
+    dialogRef.afterClosed().subscribe((result: SearchAllergyDTO | undefined) => {
       if (result) {
         // Handle the result data here, e.g., add it to your data array
         this.allergiesService.searchItems(result).subscribe({
@@ -192,5 +197,5 @@ export class AllergiesComponent implements OnInit, AfterViewInit {
         console.log('Allergy Data:', result);
       }
     });
-  }*/
+  }
 }
