@@ -20,6 +20,9 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {MedicalConditionsDialogComponent} from '../../dialog/medical-conditions/medical-conditions-dialog.component';
 import {MedicalConditionDTO} from '../../../models/medical-condition/medicalConditionDTO';
 import {MedicalConditionsService} from '../../../services/medical-conditions/medical-conditions.service';
+import {
+  MedicalConditionsSearchDialogComponent
+} from '../../dialog/medical-conditions/mediacal-conditions-dialog-search/medical-conditions-dialog-search.component';
 
 @Component({
   selector: 'app-medical-conditions',
@@ -171,8 +174,8 @@ export class MedicalConditionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /*openSearchDialog(): void {
-    const dialogRef = this.dialog.open(MedicalConditionsDialogComponent, {
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(MedicalConditionsSearchDialogComponent, {
       width: '400px',
     });
 
@@ -190,5 +193,5 @@ export class MedicalConditionsComponent implements OnInit, AfterViewInit {
         console.log('Medical Conditions Data:', result);
       }
     });
-  }*/
+  }
 }
