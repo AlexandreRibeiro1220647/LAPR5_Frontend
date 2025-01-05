@@ -20,7 +20,6 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AllergiesService} from '../../../services/allergies/allergies.service';
 import {AllergyDTO} from '../../../models/allergy/allergyDTO';
 import {AllergiesDialogComponent} from '../../dialog/allergies/allergies-dialog.component';
-import * as Console from 'console';
 import {
   AllergiesSearchDialogComponent
 } from '../../dialog/allergies/search-for-staff/allergies-dialog-search.component';
