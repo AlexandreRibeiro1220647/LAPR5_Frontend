@@ -63,7 +63,7 @@ describe('StaffComponent', () => {
     const mockStaff: Staff[] = [
       {
         licenseNumber: '12345',
-        specialization: 'Cardiology',
+        specializationId: 'Cardiology',
         phone: '123456789',
         availabilitySlots: [],
         status: StaffStatus.ACTIVE,
@@ -132,7 +132,7 @@ describe('StaffComponent', () => {
     };
     const mockSelectedStaff: Staff = {
       licenseNumber: '12345',
-      specialization: 'Cardiology',
+      specializationId: 'Cardiology',
       phone: '123456789',
       availabilitySlots: [],
       status: StaffStatus.ACTIVE,
@@ -159,7 +159,7 @@ describe('StaffComponent', () => {
   it('should handle inactivation of staff', () => {
     const mockSelectedStaff: Staff = {
       licenseNumber: '12345',
-      specialization: 'Cardiology',
+      specializationId: 'Cardiology',
       phone: '123456789',
       availabilitySlots: [],
       status: StaffStatus.ACTIVE,
@@ -194,7 +194,7 @@ describe('StaffComponent', () => {
     const mockFilteredData: Staff[] = [
       {
         licenseNumber: '12345',
-        specialization: 'Cardiology',
+        specializationId: 'Cardiology',
         phone: '123456789',
         availabilitySlots: [],
         status: StaffStatus.ACTIVE,
