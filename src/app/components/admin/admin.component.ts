@@ -44,4 +44,8 @@ export class AdminComponent {
     this.router.navigate(['admin/room-type'])
   }
 
+  toSpecializations() {
+    this.router.navigate(['admin/specialization']);
+  }
+
 }
