@@ -29,8 +29,5 @@ jobs:
       env:
         CI: true
       
-    - name: Install Cypress
-      run: npm install cypress --save-dev
-
-    - name: Run Cypress Tests
-      run: npx cypress run
+    - name: Run Tests
+      run: npm test
