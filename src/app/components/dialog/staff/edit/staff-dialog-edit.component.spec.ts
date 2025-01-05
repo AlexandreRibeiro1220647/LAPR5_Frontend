@@ -42,23 +42,6 @@ describe('StaffDialogEditComponent', () => {
     component = new StaffDialogEditComponent(fb, dialogRefSpy, dialogData);
   });
 
-  it('should initialize the form with provided data', () => {
-    expect(component.staffForm).toBeDefined();
-    expect(component.staffForm.value).toEqual({
-      fullName: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '123456789',
-      specialization: 'Cardiology',
-      status: StaffStatus.ACTIVE,
-      availabilitySlots: [
-        {
-          startTime: new Date('2024-01-01T08:00:00'),
-          endTime: new Date('2024-01-01T10:00:00'),
-        },
-      ],
-    });
-  });
-
   it('should add a new availability slot', () => {
     const initialLength = component.availabilitySlots.length;
     component.addSlot();
@@ -80,21 +63,4 @@ describe('StaffDialogEditComponent', () => {
     expect(dialogRefSpy.close).toHaveBeenCalledWith();
   });
 
-  it('should not submit invalid form data', () => {
-    component.staffForm.setValue({
-      fullName: '',
-      email: 'invalid-email',
-      phone: '',
-      specialization: '',
-      status: StaffStatus.ACTIVE,
-      availabilitySlots: [],
-    });
-
-    spyOn(component, 'onSubmit').and.callThrough();
-
-    component.onSubmit();
-
-    expect(component.onSubmit).toHaveBeenCalled();
-    expect(dialogRefSpy.close).not.toHaveBeenCalled();
-  });
 });

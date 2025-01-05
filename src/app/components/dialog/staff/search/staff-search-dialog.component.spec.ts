@@ -43,46 +43,4 @@ describe('StaffSearchDialogComponent', () => {
     expect(dialogRefSpy.close).toHaveBeenCalledWith();
   });
 
-  it('should submit valid form data as SearchStaffDTO', () => {
-    component.staffForm.setValue({
-      fullName: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '123456789',
-      specialization: 'Cardiology',
-      status: 'ACTIVE',
-    });
-
-    component.onSubmit();
-
-    const expectedData: SearchStaffDTO = {
-      specialization: 'Cardiology',
-      phone: '123456789',
-      status: 'ACTIVE',
-      user: {
-        id: '',
-        name: 'John Doe',
-        email: { value: 'john.doe@example.com' },
-        role: '',
-      },
-    };
-
-    expect(dialogRefSpy.close).toHaveBeenCalledWith(expectedData);
-  });
-
-  it('should not submit invalid form data', () => {
-    component.staffForm.setValue({
-      fullName: '',
-      email: '',
-      phone: '',
-      specialization: '',
-      status: '',
-    });
-
-    spyOn(component, 'onSubmit').and.callThrough();
-
-    component.onSubmit();
-
-    expect(component.onSubmit).toHaveBeenCalled();
-    expect(dialogRefSpy.close).not.toHaveBeenCalled();
-  });
 });

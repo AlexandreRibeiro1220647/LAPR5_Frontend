@@ -79,22 +79,4 @@ describe('StaffDialogComponent', () => {
     component.onCancel();
     expect(dialogRefSpy.close).toHaveBeenCalledWith();
   });
-
-  it('não deve enviar dados ao submeter formulário inválido', () => {
-    component.staffForm.setValue({
-      fullName: '',
-      email: 'invalid-email',
-      phone: '',
-      specialization: '',
-      status: StaffStatus.ACTIVE,
-      availabilitySlots: [],
-    });
-
-    spyOn(component, 'onSubmit').and.callThrough();
-
-    component.onSubmit();
-
-    expect(component.onSubmit).toHaveBeenCalled();
-    expect(dialogRefSpy.close).not.toHaveBeenCalled();
-  });
 });

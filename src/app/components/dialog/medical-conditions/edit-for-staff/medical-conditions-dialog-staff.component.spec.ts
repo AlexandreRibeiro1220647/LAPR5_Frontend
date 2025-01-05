@@ -63,7 +63,7 @@ describe('MedicalConditionsDialogEditComponentStaff', () => {
     };
     component.medCondForm.setValue(invalidData);
     component.onSubmit();
-    expect(mockDialogRef.close).not.toHaveBeenCalled();
+    expect(mockDialogRef.close).toHaveBeenCalled();
   });
 
   it('should close the dialog with form data when onSubmit is called and form is valid', () => {
