@@ -14,6 +14,7 @@ import { ThreeSceneComponent } from './components/three-scene/three-scene.compon
 import {
   AllergiesComponent
 } from './components/admin/allergies/allergies.component';
+import {SpecializationComponent} from './components/admin/specialization/specialization.component';
 import { AppointmentSurgeryComponent } from './components/staff/appointment-surgery/appointment-surgery.component';
 import { RoomTypeComponent } from './components/admin/room-type/room-type.component';
 import { StaffComponentOperations } from './components/staff/operation-requests/staff.component-operations';
@@ -49,6 +50,7 @@ export const routes: Routes = [
       { path: 'room-type', component: RoomTypeComponent},
       { path: 'allergies', component: AllergiesComponent },
       { path: 'medicalConditions', component: MedicalConditionsComponent },
+      { path: 'specialization', component: SpecializationComponent},
       { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
