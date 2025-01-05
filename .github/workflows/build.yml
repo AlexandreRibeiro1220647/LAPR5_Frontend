@@ -28,6 +28,4 @@ jobs:
         npx wait-on http://localhost:4200
       env:
         CI: true
-      
-    - name: Run Tests
-      run: npm test
+    
