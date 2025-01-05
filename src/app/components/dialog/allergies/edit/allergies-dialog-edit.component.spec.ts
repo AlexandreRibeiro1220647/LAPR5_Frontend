@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AllergiesDialogComponent } from './allergies-dialog-edit.component';
 
-describe('AllergiesDialogComponent', () => {
+describe('AllergiesEditDialogComponent', () => {
   let component: AllergiesDialogComponent;
   let fixture: ComponentFixture<AllergiesDialogComponent>;
   let mockDialogRef: jasmine.SpyObj<MatDialogRef<AllergiesDialogComponent>>;
