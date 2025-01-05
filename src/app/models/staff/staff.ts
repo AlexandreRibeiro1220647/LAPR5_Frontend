@@ -3,7 +3,7 @@ import {StaffStatus} from './staffstatus';
 
 export interface Staff {
   licenseNumber: string;
-  specialization: string;
+  specializationId: string;
   phone: string;
   availabilitySlots: Slot[];
   status: StaffStatus;
@@ -15,4 +15,36 @@ export interface Staff {
     };
     role: string;
   };
+}
+
+export class SpecializationDto {
+  constructor(
+    public specializationId: string,
+    public specializationDesignation: string,
+    public specializationCode: string,
+    public specializationDescription: string,
+  ) {}
+}
+export class CreateSpecializationDto {
+  constructor(
+    public specializationDesignation: string,
+    public specializationCode: string,
+    public specializationDescription: string,
+  ) {}
+}
+export class SearchSpecializationDto {
+  constructor(
+    public specializationDesignation: string,
+    public specializationCode: string,
+    public specializationDescription: string,
+  ) {}
+}
+
+
+export class Specialization {
+  constructor(
+    public specializationId: string,
+    public specializationDesignation: string,
+    public specializationCode: string,
+    public specializationDescription: string) {}
 }
