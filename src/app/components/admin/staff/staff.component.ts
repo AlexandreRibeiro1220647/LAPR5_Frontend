@@ -161,7 +161,7 @@ export class StaffComponente implements OnInit, AfterViewInit {
 
     const updateDto: UpdateStaffDto = {
       phone: selectedStaff.phone,
-      specialization: selectedStaff.specialization,
+      specialization: selectedStaff.specializationId,
       availabilitySlots: selectedStaff.availabilitySlots,
       status: StaffStatus.INACTIVE,
       user: {
