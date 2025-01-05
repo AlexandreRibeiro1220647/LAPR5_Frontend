@@ -20,8 +20,6 @@ import { StaffComponentOperations } from './components/staff/operation-requests/
 import {MedicalConditionsComponent} from './components/admin/medical-conditions/medical-conditions.component';
 import {PrivacyPolicyComponent} from './components/privacy-policy/privacy-policy.component';
 import { AllergiesStaffComponent } from './components/staff/allergies/allergies.staff.component';
-import { MedicalConditionsDialogComponent } from './components/dialog/medical-conditions/medical-conditions-dialog.component';
-import { MedicalConditionsDialogComponentStaff } from './components/dialog/medical-conditions/edit-for-staff/medical-conditions-dialog-staff.component';
 import { MedicalConditionsComponentStaff } from './components/staff/medical-condition/medical-condition.component';
 
 export const routes: Routes = [
@@ -35,8 +33,6 @@ export const routes: Routes = [
       { path: 'appointment-surgery', component: AppointmentSurgeryComponent},
       { path: 'allergies', component: AllergiesStaffComponent},
       { path: 'medicalConditions', component: MedicalConditionsComponentStaff},
-
-
       { path: '', redirectTo: '', pathMatch: 'full' }, // Default child route
     ],
   },
