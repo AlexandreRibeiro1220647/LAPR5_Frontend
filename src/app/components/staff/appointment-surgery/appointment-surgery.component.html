@@ -1,36 +1,35 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">    
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-table">
       <!-- AppointmentSurgery Name Column -->
       <ng-container matColumnDef="appointmentSurgeryName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> AppointmentSurgeryName </th>
         <td mat-cell *matCellDef="let element"> {{ element.appointmentSurgeryName }} </td>
       </ng-container>
-  
+
       <!-- Room ID Column -->
       <ng-container matColumnDef="roomId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription=""> Room Name </th>
         <td mat-cell *matCellDef="let element"> {{ getRoomName(element.roomId) }} </td>
       </ng-container>
-  
+
       <!-- OperationRequestId Column -->
       <ng-container matColumnDef="operationRequestId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription=""> OperationRequestId </th>
         <td mat-cell *matCellDef="let element"> {{ element.operationRequestId }} </td>
       </ng-container>
-  
+
       <!-- AppointmentSurgery Date Column -->
       <ng-container matColumnDef="appointmentSurgeryDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription=""> AppointmentSurgery Date </th>
         <td mat-cell *matCellDef="let element"> {{ element.appointmentSurgeryDate }} </td>
       </ng-container>
-      
-  
+
+
       <!-- AppointmentSurgery Status Column -->
       <ng-container matColumnDef="appointmentSurgeryStatus">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription=""> AppointmentSurgery Status </th>
         <td mat-cell *matCellDef="let element"> {{ element.appointmentSurgeryStatus }} </td>
       </ng-container>
-  
+
       <!-- StartTime Column -->
       <ng-container matColumnDef="startTime">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription=""> StartTime </th>
@@ -42,25 +41,23 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription=""> EndTime </th>
         <td mat-cell *matCellDef="let element"> {{ element.endTime}} </td>
       </ng-container>
-  
+
       <!-- Header and Row Definitions -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"
           (click)="toggleSelection(row)"
           [class.selected]="selection.isSelected(row)">
       </tr>
-  
-   
-  
+
+
+
     </table>
-  
+
     <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  
+
     <div class="button-container">
       <button mat-flat-button (click)="openCreateDialog()" class="create-button">Create</button>
       <button mat-flat-button (click)="openEditDialog()" class="edit-button">Edit</button>
 
     </div>
-    </div>
-  
-  
+

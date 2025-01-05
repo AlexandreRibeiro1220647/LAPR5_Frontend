@@ -6,19 +6,7 @@ body {
     height: 77.35vh;
     background-color: rgb(49, 81, 102);
   }
-  /* Container for the table */
-  .mat-elevation-z8 {
-    margin: 20px auto;
-    max-width: 90%;  /* Limits the table width */
-    padding: 20px;
-    height: 535px;
-    overflow-y: auto; /* Allow vertical scrolling */
-    background-color: rgb(49, 81, 102, 0.6); /* White background for the table container */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for the container */
-    flex: 1; /* Allow it to take as much space as available */
-  }
-  
+
   /* Ensure parent doesn't stretch children */
   .vertical-buttons {
     display: flex;
@@ -28,7 +16,7 @@ body {
     margin: 20px auto;
     margin-top: 30px;
   }
-  
+
   .vertical-buttons .right-button {
     width: 12px; /* Force the width */
     min-width: 12px; /* Prevent growing */
@@ -43,38 +31,38 @@ body {
     margin-right: 12px;
     box-sizing: border-box; /* Includes padding and border in size */
   }
-  
+
   /* On hover, only background changes */
   .vertical-buttons .right-button:hover {
     background-color: rgb(165, 195, 217);
   }
-  
+
   /* Table Styles */
   table.mat-table {
     width: 100%;
     border-collapse: collapse; /* Ensures the table rows and columns are closely packed */
   }
-  
+
   th.mat-header-cell, td.mat-cell {
     padding: 12px 20px; /* Adjust padding to make the table cells more spacious */
     text-align: left;
     font-size: 14px; /* Set font size for readability */
   }
-  
+
   .mat-mdc-form-field {
     width: 100%;
     font-size: 14px;
   }
-  
+
   td, th {
     width: 25%;
   }
-  
+
   .button-container {
     display: flex;
     justify-content: flex-end; /* Align items to the left */
   }
-  
+
   .button-container .create-button,
   .button-container .edit-button,
   .button-container .delete-button,
@@ -90,7 +78,7 @@ body {
     color: white;
     border: 2px solid rgb(49, 81, 102);
   }
-  
+
   /* Hover effect for button1 */
   .button-container .create-button:hover,
   .button-container .edit-button:hover,
@@ -100,8 +88,7 @@ body {
     background-color: rgb(164, 193, 216, 0.6);
     color: white;
   }
-  
+
   .selected {
     background-color: rgba(164, 193, 216, 0.1); /* Light blue highlight */
   }
-  

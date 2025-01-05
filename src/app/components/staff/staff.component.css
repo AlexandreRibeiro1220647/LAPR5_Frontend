@@ -37,7 +37,7 @@ body {
 }
 
 .vertical-buttons .right-button {
-  width: 200px; /* Force the width */
+  width: 500px; /* Force the width */
   height: 12px; /* Desired height */
   padding: 0; /* Eliminate padding */
   color: transparent;
